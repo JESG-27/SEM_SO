@@ -1,8 +1,9 @@
 #include <iostream>
+#include <queue>
+#include <list>
 #include "proceso.h"
 #include "lote.h"
 #include "funciones.h"
-#include <queue>
 
 using namespace std;
 
@@ -13,12 +14,8 @@ int main(){
     size_t i=0;
     queue<Lote> cola_lotes;
     queue<Lote> lotes_terminados;
+    list<int> ids;
 
-
-    // Lote lote1;
-    // Proceso pro = Proceso(123, "Emmanuel", "12+10", 10);
-    // lote1.agregarProceso(pro);
-    // cout << "ID: " << lote1.acceder(6).getId() << endl;
 
     do
     {
@@ -44,17 +41,21 @@ int main(){
     while (i<num_pro)
     {
         Lote nuevo_lote;
-        for (size_t j=0; j<4; j++)
+        size_t j=0;
+        while (i<num_pro && j<4)
         {
-            Proceso nuevo = agregarProceso();    
-            nuevo_lote.agregarProceso(nuevo);
+            agregarProceso(nuevo_lote, ids);
+            //nuevo_lote.agregarProceso(nuevo);
             i++;
+            j++;
         }
-        cola_lotes.push(nuevo_lote);
+        //cola_lotes.push(nuevo_lote);
+        j=0;
     }
 
-    cout << "Lotes en cola: " << cola_lotes.size() << endl;
-    cout << cola_lotes.front().acceder(0).getId() << endl;
+
+    //cout << "Lotes en cola: " << cola_lotes.size() << endl;
+    //cout << cola_lotes.front().acceder(0).getId() << endl;
     
     return 0;
 }

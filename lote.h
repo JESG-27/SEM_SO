@@ -12,7 +12,6 @@ public:
     Lote();
     void agregarProceso(const Proceso &p);
     int size();
-    Proceso acceder(int pos);
 
     friend Lote& operator<<(Lote &l, const Proceso &p)
     {
