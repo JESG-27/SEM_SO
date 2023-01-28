@@ -107,3 +107,37 @@ Proceso capturarProceso (Lote &lote, list<int> &ids)
     Proceso p = Proceso (id, programador, operando_1, operacion, operando_2, tiempo);
     return p;
 }
+
+void ejecutar_proceso(Proceso &p)
+{
+    float operando_1, operando_2;
+    string operador;
+
+    operando_1 = p.getOperando_1();
+    operando_2 = p.getOperando_2();
+    operador = p.getOperacion();
+
+    if (operador == "+")
+    {
+        p.setResultado(operando_1+operando_2);
+    }
+    else if (operador == "-")
+    {
+        p.setResultado(operando_1-operando_2);
+    }
+    else if (operador == "*")
+    {
+        p.setResultado(operando_1*operando_2);
+    }
+    else if (operador == "/")
+    {
+        p.setResultado(operando_1/operando_2);
+    }
+    else if (operador == "%")
+    {
+        int num_1 = (int)operando_1;
+        int num_2 = (int)operando_2;
+        int resultado = num_1%num_2;
+        p.setResultado((float)resultado);
+    }   
+}
