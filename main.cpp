@@ -10,7 +10,7 @@ using namespace std;
 
 int main(){
 
-    int num_pro=0,tiempo,global = 0; // Número de procesos
+    int num_pro=0,tiempo,global = 0,TTE=0,TRE=0; // Número de procesos
     float num_lotes; // Número de lotes
     size_t i=0;
     queue<Lote> cola_lotes;
@@ -65,6 +65,10 @@ int main(){
             lote_actual.pop_front();
             tiempo = proceso_actual.getTiempo();
             
+            ejecutar_proceso(proceso_actual);//Valor de la operacion 
+            TTE=0;
+            TRE=0;
+
             while (tiempo != 0)
             {
 
@@ -77,7 +81,8 @@ int main(){
 
                 cout << "Proceso en ejecucion:" << endl;
                 proceso_actual.print_ejecucion();
-                //ejecutar_proceso(proceso_actual);
+                cout << "Tiempo transcurrido: " << TTE;
+                cout << " Tiempo restante: " << TRE << endl ;                           
 
                 
                 cout << "Procesos terminados:" << endl;
@@ -85,7 +90,6 @@ int main(){
                 {
                     Proceso pro = *it;
                     pro.print_terminado();
-                    system("pause");
                 }
 
                 cout << tiempo << endl;
@@ -93,6 +97,8 @@ int main(){
                 Sleep(1000);//Detener por un segundo 
                 global++;//Aumenta el contador global 
                 tiempo--;//Resta el tiempo transcurrido
+                TTE++;//Tiempo transcurrido
+                TRE=tiempo-1;
 
                 system("cls");
             
