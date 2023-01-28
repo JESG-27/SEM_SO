@@ -9,7 +9,7 @@ void Lote::agregarProceso(const Proceso &p)
 {
     if (cont<4)
     {
-        arreglo[cont] = p;
+        lista_procesos.push_back(p);
         cont++;
     }
 }
@@ -17,4 +17,26 @@ void Lote::agregarProceso(const Proceso &p)
 int Lote::size()
 {
     return cont;
+}
+
+void Lote::print()
+{
+    for (auto it = lista_procesos.begin(); it != lista_procesos.end(); it++)
+    {
+        Proceso pro = *it;
+        cout << "   ID: " << pro.getId() << endl;
+        cout << "   Programador: " << pro.getProgramador() << endl;
+        cout << "   Operacion: " << pro.getOperando_1() << pro.getOperacion() << pro.getOperando_2() << endl;
+        cout << "   Tiempo: " << pro.getTiempo() << endl;
+    }
+}
+
+Proceso Lote::front()
+{
+    return lista_procesos.front();
+}
+
+void Lote::pop_front()
+{
+    lista_procesos.pop_front();
 }

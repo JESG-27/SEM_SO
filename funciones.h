@@ -14,11 +14,11 @@ bool existente(int id, list<int> &ids)
     }
 }
 
-bool operacionValida (float operando_1, char operador, float operando_2)
+bool operacionValida (float operando_1, string operador, float operando_2)
 {
-    if (operador == '+' || operador == '-' || operador == '*' || operador == '/' || operador == '%')
+    if (operador == "+" || operador == "-" || operador == "*" || operador == "/" || operador == "%")
     {
-        if (operador == '/' || operador == '%')
+        if (operador == "/" || operador == "%")
         {
             if (operando_2 == 0)
             {
@@ -40,12 +40,11 @@ bool operacionValida (float operando_1, char operador, float operando_2)
     }
 }
 
-Proceso agregarProceso (Lote &lote, list<int> &ids)
+Proceso capturarProceso (Lote &lote, list<int> &ids)
 {
     int id;
-    string programador;
+    string programador, operacion;
     float operando_1;
-    char operacion;
     float operando_2;
     int tiempo;
     bool id_existe, operacion_valida;
@@ -76,10 +75,12 @@ Proceso agregarProceso (Lote &lote, list<int> &ids)
     do
     {
         cout << "Operacion" << endl;
-        cout << "   Operadon 1: ";
+        cout << "   Operando 1: ";
         cin >> operando_1; cin.ignore();
+
         cout << "   Operador: ";
-        cin >> operacion; cin.ignore();
+        getline(cin, operacion);
+
         cout << "   Operando 2: ";
         cin >> operando_2; cin.ignore();
 
@@ -96,11 +97,13 @@ Proceso agregarProceso (Lote &lote, list<int> &ids)
     do
     {
         cout << "Tiempo: ";
-        cin >> tiempo;
+        cin >> tiempo; cin.ignore();
         if (tiempo <= 0)
         {
             cout << "Tiempo no valido" << endl;
         }
     } while (tiempo <= 0);
-    
+
+    Proceso p = Proceso (id, programador, operando_1, operacion, operando_2, tiempo);
+    return p;
 }

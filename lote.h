@@ -6,12 +6,15 @@
 using namespace std;
 
 class Lote{
-    Proceso arreglo[4];
+    list<Proceso> lista_procesos;
     size_t cont;
 public:
     Lote();
     void agregarProceso(const Proceso &p);
     int size();
+    void print();
+    Proceso front();
+    void pop_front();
 
     friend Lote& operator<<(Lote &l, const Proceso &p)
     {

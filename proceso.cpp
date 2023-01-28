@@ -5,7 +5,7 @@ Proceso::Proceso()
 
 }
 
-Proceso::Proceso(int id, const string &programador, float operando_1, const char &operacion, float operando_2, int tiempo)
+Proceso::Proceso(int id, const string &programador, float operando_1, const string &operacion, float operando_2, int tiempo)
 {
     this->id = id;
     this->programador = programador;
@@ -45,12 +45,12 @@ float Proceso::getOperando_1()
     return operando_1;
 }
 
-void Proceso::setOperacion(const char &dato)
+void Proceso::setOperacion(const string &dato)
 {
     operacion = dato;
 }
 
-char Proceso::getOperacion()
+string Proceso::getOperacion()
 {
     return operacion;
 }
@@ -73,4 +73,14 @@ void Proceso::setTiempo(int dato)
 int Proceso::getTiempo()
 {
     return tiempo;
+}
+
+void Proceso::setResultado(float dato)
+{
+    resultado = dato;
+}
+
+float Proceso::getResultado()
+{
+    return resultado;
 }

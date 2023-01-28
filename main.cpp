@@ -16,11 +16,10 @@ int main(){
     queue<Lote> lotes_terminados;
     list<int> ids;
 
-
     do
     {
         cout << "Procesos a agregar: ";
-        cin >> num_pro;
+        cin >> num_pro; cin.ignore();
         if (num_pro <= 0)
         {
             cout << "Cantidad no valida" << endl;
@@ -44,18 +43,55 @@ int main(){
         size_t j=0;
         while (i<num_pro && j<4)
         {
-            agregarProceso(nuevo_lote, ids);
-            //nuevo_lote.agregarProceso(nuevo);
+            cout << "Proceso " << i+1 << endl;
+            Proceso nuevo_proceso = capturarProceso(nuevo_lote, ids);
+            nuevo_lote << nuevo_proceso;
             i++;
             j++;
+            system("cls");
         }
-        //cola_lotes.push(nuevo_lote);
-        j=0;
+        cola_lotes.push(nuevo_lote);
     }
 
+    while (cola_lotes.size() != 0)
+    {
+        // for (size_t pos=0; pos<num_lotes; pos++)
+        // {
+        //     cout << "Lote actual: " << pos+1 << endl;
+        //     cola_lotes.front().print();
+        //     lotes_terminados.push(cola_lotes.front());
+        //     cola_lotes.pop();
+        // }
 
-    //cout << "Lotes en cola: " << cola_lotes.size() << endl;
-    //cout << cola_lotes.front().acceder(0).getId() << endl;
-    
+        // cout << endl << "Terminados" << endl;
+        // for (size_t pos=0; pos<num_lotes; pos++)
+        // {
+        //     lotes_terminados.front().print();
+        //     lotes_terminados.pop();
+        // }
+        
+        if (cola_lotes.size() != 1)
+        {
+            cout << "Lotes Pendientes: " << cola_lotes.size()-1 << endl;
+        }
+        cout << "Tiempo transcurrido: " << endl;
+        
+        cout << "Lote en ejecucion:" << endl;
+        Lote lote_actual = cola_lotes.front();
+        Proceso proceso_actual = lote_actual.front();
+        lote_actual.pop_front();
+        lote_actual.print();
+        cout << endl;
+        
+        cout << "Proceso en ejecucion:" << endl;
+
+        cout << "Procesos terminados:" << endl;
+        for (size_t pos=0; pos<num_lotes; pos++)
+        {
+            lotes_terminados.front().print();
+            lotes_terminados.pop();
+        }
+    }
+
     return 0;
 }
