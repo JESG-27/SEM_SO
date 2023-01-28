@@ -39,4 +39,16 @@ Proceso Lote::front()
 void Lote::pop_front()
 {
     lista_procesos.pop_front();
+    cont--;
+}
+
+void Lote::print_ejecucion()
+{
+    for (auto it = lista_procesos.begin(); it != lista_procesos.end(); it++)
+    {
+        Proceso pro = *it;
+        cout << "   ID: " << pro.getId();
+        cout << "   Programador: " << pro.getProgramador();
+        cout << "   Tiempo: " << pro.getTiempo() << endl;
+    }
 }

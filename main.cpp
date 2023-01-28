@@ -13,7 +13,7 @@ int main(){
     float num_lotes; // Número de lotes
     size_t i=0;
     queue<Lote> cola_lotes;
-    queue<Lote> lotes_terminados;
+    list<Proceso> procesos_terminados;
     list<int> ids;
 
     do
@@ -55,43 +55,46 @@ int main(){
 
     while (cola_lotes.size() != 0)
     {
-        // for (size_t pos=0; pos<num_lotes; pos++)
-        // {
-        //     cout << "Lote actual: " << pos+1 << endl;
-        //     cola_lotes.front().print();
-        //     lotes_terminados.push(cola_lotes.front());
-        //     cola_lotes.pop();
-        // }
-
-        // cout << endl << "Terminados" << endl;
-        // for (size_t pos=0; pos<num_lotes; pos++)
-        // {
-        //     lotes_terminados.front().print();
-        //     lotes_terminados.pop();
-        // }
-        
-        if (cola_lotes.size() != 1)
-        {
-            cout << "Lotes Pendientes: " << cola_lotes.size()-1 << endl;
-        }
-        cout << "Tiempo transcurrido: " << endl;
-        
-        cout << "Lote en ejecucion:" << endl;
         Lote lote_actual = cola_lotes.front();
-        Proceso proceso_actual = lote_actual.front();
-        lote_actual.pop_front();
-        lote_actual.print();
-        cout << endl;
-        
-        cout << "Proceso en ejecucion:" << endl;
+        cola_lotes.pop();
 
-        cout << "Procesos terminados:" << endl;
-        for (size_t pos=0; pos<num_lotes; pos++)
+        while (lote_actual.size() != 0)
         {
-            lotes_terminados.front().print();
-            lotes_terminados.pop();
-        }
-    }
+            Proceso proceso_actual = lote_actual.front();
+            lote_actual.pop_front();
+            
+            cout << "Lotes Pendientes: " << cola_lotes.size() << endl;
+            
+            cout << "Tiempo transcurrido: " << endl; // Contador global
 
+            cout << "Lote en ejecucion:" << endl;
+            lote_actual.print_ejecucion();
+
+            cout << "Proceso en ejecucion:" << endl;
+            proceso_actual.print_ejecucion();
+            //ejecutar_proceso(proceso_actual);
+            // delay contador global, tiempo transcurrido y tiempo restante
+
+            cout << "Procesos terminados:" << endl;
+            if (lote_actual.size() == 0)
+            {
+                procesos_terminados.push_back(proceso_actual);
+                for (auto it = procesos_terminados.begin(); it != procesos_terminados.end(); it++)
+                {
+                    Proceso pro = *it;
+                    pro.print_terminado();
+                }
+            }
+            else
+            {
+                for (auto it = procesos_terminados.begin(); it != procesos_terminados.end(); it++)
+                {
+                    Proceso pro = *it;
+                    pro.print_terminado();
+                }
+                procesos_terminados.push_back(proceso_actual);
+            }
+        }    
+    }
     return 0;
 }

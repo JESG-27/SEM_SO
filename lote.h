@@ -15,6 +15,7 @@ public:
     void print();
     Proceso front();
     void pop_front();
+    void print_ejecucion();
 
     friend Lote& operator<<(Lote &l, const Proceso &p)
     {

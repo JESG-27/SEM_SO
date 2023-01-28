@@ -39,6 +39,9 @@ public:
 
     void setResultado(float dato);
     float getResultado();
+
+    void print_ejecucion();
+    void print_terminado();
 };
 
 #endif

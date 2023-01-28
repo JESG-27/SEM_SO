@@ -84,3 +84,18 @@ float Proceso::getResultado()
 {
     return resultado;
 }
+
+void Proceso::print_ejecucion()
+{
+    cout << "   ID: " << id;
+    cout << "   Programador: " << programador;
+    cout << "   Operacion: " << operando_1 << operacion << operando_2;
+    cout << "   Tiempo estimado: " << tiempo << endl;
+}
+
+void Proceso::print_terminado()
+{
+    cout << "   ID: " << id;
+    cout << "   Operacion: " << operando_1 << operacion << operando_2;
+    cout << "   Resultado: " << resultado << endl;
+}
