@@ -11,7 +11,7 @@ using namespace std;
 int main(){
 
     int num_pro=0, tiempo, global = 0, TTE=0, TRE=0;        // Número de procesos
-    float num_lotes;                                    // Número de lotes
+    float num_lotes;                                        // Número de lotes
     size_t i=0;
     queue<Lote> cola_lotes;
     list<Proceso> procesos_terminados;
@@ -42,10 +42,11 @@ int main(){
     {
         Lote nuevo_lote;
         size_t j=0;
+        int num_lote;
         while (i<num_pro && j<4)
         {
             cout << "Proceso " << i+1 << endl;
-            Proceso nuevo_proceso = capturarProceso(nuevo_lote, ids);
+            Proceso nuevo_proceso = capturarProceso(nuevo_lote, ids, cola_lotes.size()+1);
             nuevo_lote << nuevo_proceso;
             i++;
             j++;
@@ -104,6 +105,7 @@ int main(){
             procesos_terminados.push_back(proceso_actual);
             if (cola_lotes.size() == 0)
             {
+                cout << "Tiempo total:" << global << endl;
                 cout << "Procesos terminados:" << endl;
                 for (auto it = procesos_terminados.begin(); it != procesos_terminados.end(); it++)
                 {

@@ -5,7 +5,7 @@ Proceso::Proceso()
 
 }
 
-Proceso::Proceso(int id, const string &programador, float operando_1, const string &operacion, float operando_2, int tiempo)
+Proceso::Proceso(int id, const string &programador, float operando_1, const string &operacion, float operando_2, int tiempo, int numero_lote)
 {
     this->id = id;
     this->programador = programador;
@@ -13,6 +13,7 @@ Proceso::Proceso(int id, const string &programador, float operando_1, const stri
     this->operacion = operacion;
     this->operando_2 = operando_2;
     this->tiempo = tiempo;
+    this->num_lote = numero_lote;
 }
 
 void Proceso::setId(int dato)
@@ -85,6 +86,16 @@ float Proceso::getResultado()
     return resultado;
 }
 
+void Proceso::setNum_lote(int dato)
+{
+    num_lote = dato;
+}
+
+int Proceso::getNum_lote()
+{
+    return num_lote;
+}
+
 void Proceso::print_ejecucion()
 {
     cout << "   ID: " << id;
@@ -97,5 +108,6 @@ void Proceso::print_terminado()
 {
     cout << "   ID: " << id;
     cout << "   Operacion: " << operando_1 << operacion << operando_2;
-    cout << "   Resultado: " << resultado << endl;
+    cout << "   Resultado: " << resultado;
+    cout << "   Lote: " << num_lote << endl;
 }

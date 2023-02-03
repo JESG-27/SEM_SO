@@ -14,10 +14,11 @@ class Proceso{
     float operando_2;
     int tiempo;
     float resultado;
+    int num_lote;
 
 public:
     Proceso();
-    Proceso(int id, const string &programador, float operando_1, const string &operacion, float operando_2, int tiempo);
+    Proceso(int id, const string &programador, float operando_1, const string &operacion, float operando_2, int tiempo, int numero_lote);
     
     void setId(int dato);
     int getId();
@@ -39,6 +40,9 @@ public:
 
     void setResultado(float dato);
     float getResultado();
+
+    void setNum_lote(int dato);
+    int getNum_lote();
 
     void print_ejecucion();
     void print_terminado();
