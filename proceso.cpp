@@ -12,6 +12,7 @@ Proceso::Proceso(int id, float operando_1, const string &operacion, float operan
     this->operacion = operacion;
     this->operando_2 = operando_2;
     this->tiempo = tiempo;
+    this->tiempo_res = tiempo;
     this->num_lote = numero_lote;
 }
 
@@ -53,6 +54,16 @@ void Proceso::setOperando_2(float dato)
 float Proceso::getOperando_2()
 {
     return operando_2;
+}
+
+void Proceso::setTiempoRes(int dato)
+{
+    tiempo_res = dato;
+}
+
+int Proceso::getTiempoRes()
+{
+    return tiempo_res;
 }
 
 void Proceso::setTiempo(int dato)

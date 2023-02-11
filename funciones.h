@@ -93,7 +93,7 @@ Proceso capturarProceso (Lote &lote, list<int> &ids, int num_lote)
     // Tiempo
     do
     {
-        tiempo = 1+rand()%(11-1);
+        tiempo = rand()%(16);
         cout << "Tiempo: " << tiempo << endl;
         if (tiempo <= 0)
         {

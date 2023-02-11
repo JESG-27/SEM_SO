@@ -12,6 +12,7 @@ class Proceso{
     string operacion;
     float operando_2;
     int tiempo;
+    int tiempo_res;
     float resultado;
     int num_lote;
 
@@ -33,6 +34,9 @@ public:
     
     void setTiempo(int dato);
     int getTiempo();
+
+    void setTiempoRes(int dato);
+    int getTiempoRes();
 
     void setResultado(float dato);
     float getResultado();
