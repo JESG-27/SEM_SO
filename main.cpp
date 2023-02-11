@@ -14,6 +14,7 @@ int main(){
 
     int num_pro=0, tiempo_res, global = 0, TTE=0, TRE=0;        // Número de procesos
     float num_lotes;                                        // Número de lotes
+    char ch;
     size_t i=0;
     queue<Lote> cola_lotes;
     list<Proceso> procesos_terminados;
@@ -76,9 +77,45 @@ int main(){
             {
                 if (kbhit())
                 {
-                    char ch = getch();
+                    ch = getch();
                     cout << "Capturo " << ch << endl;
                 }
+
+                if(ch =='i'){
+                    proceso_actual.setEstado("interrumpido");
+                    fflush( stdin );
+                }else if (ch =='e')
+                {
+                    proceso_actual.setEstado("Error");
+                    fflush( stdin );
+
+                }else if (ch =='c'){
+                    proceso_actual.setEstado("continuando");
+                    fflush( stdin );
+
+                }else if (ch =='p'){
+                    proceso_actual.setEstado("pausado");
+
+                    while(ch !='c'){
+
+                        system("cls");
+                        cout << "Proceso en ejecucion:" << endl;
+                        proceso_actual.print_ejecucion();
+                        cout << "   Tiempo transcurrido: " << TTE;
+                        cout << "   Tiempo restante: " << proceso_actual.getTiempoRes() << endl; 
+                        cout << "Presiona c para continuar: ";
+                        ch=getch();
+                        
+                        
+                    }
+                    fflush( stdin );
+
+
+                }else{
+                    proceso_actual.setEstado("Terminado");
+                    fflush( stdin );
+                }
+                
 
                 cout << "Lotes Pendientes: " << cola_lotes.size() << endl;
                 

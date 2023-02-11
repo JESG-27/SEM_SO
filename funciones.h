@@ -44,7 +44,7 @@ Proceso capturarProceso (Lote &lote, list<int> &ids, int num_lote)
 {
     srand(time(NULL));
     int id;
-    string operacion;
+    string operacion,estado;
     float operando_1;
     float operando_2;
     int tiempo;
@@ -101,8 +101,10 @@ Proceso capturarProceso (Lote &lote, list<int> &ids, int num_lote)
         }
     } while (tiempo <= 0);
 
+    estado = "Nuevo";
+
     system("pause");
-    Proceso p = Proceso (id, operando_1, operacion, operando_2, tiempo, num_lote);
+    Proceso p = Proceso (id, operando_1, operacion, operando_2, tiempo, num_lote, estado);
     return p;
 }
 
