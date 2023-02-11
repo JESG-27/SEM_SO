@@ -42,8 +42,9 @@ bool operacionValida (float operando_1, string operador, float operando_2)
 
 Proceso capturarProceso (Lote &lote, list<int> &ids, int num_lote)
 {
+    srand(time(NULL));
     int id;
-    string programador, operacion;
+    string operacion;
     float operando_1;
     float operando_2;
     int tiempo;
@@ -52,8 +53,8 @@ Proceso capturarProceso (Lote &lote, list<int> &ids, int num_lote)
     // ID
     do
     {
-        cout << "ID: ";
-        cin >> id; cin.ignore();
+        id = rand()%50;
+        cout << "ID: " << id << endl;
         id_existe = existente(id, ids);
 
         if (id_existe == true)
@@ -67,22 +68,18 @@ Proceso capturarProceso (Lote &lote, list<int> &ids, int num_lote)
 
     } while (id_existe == true);
 
-    // Programador
-    cout << "Programador: ";
-    getline(cin, programador);
-
     // Operación
     do
     {
         cout << "Operacion" << endl;
-        cout << "   Operando 1: ";
-        cin >> operando_1; cin.ignore();
+        operando_1 = rand()%500;
+        cout << "   Operando 1: "<< operando_1 << endl;
 
         cout << "   Operador: ";
         getline(cin, operacion);
 
-        cout << "   Operando 2: ";
-        cin >> operando_2; cin.ignore();
+        operando_2 = rand()%500;
+        cout << "   Operando 2: " << operando_2 << endl;
 
         operacion_valida = operacionValida(operando_1, operacion, operando_2);
 
@@ -96,15 +93,16 @@ Proceso capturarProceso (Lote &lote, list<int> &ids, int num_lote)
     // Tiempo
     do
     {
-        cout << "Tiempo: ";
-        cin >> tiempo; cin.ignore();
+        tiempo = 1+rand()%(11-1);
+        cout << "Tiempo: " << tiempo << endl;
         if (tiempo <= 0)
         {
             cout << "Tiempo no valido" << endl;
         }
     } while (tiempo <= 0);
 
-    Proceso p = Proceso (id, programador, operando_1, operacion, operando_2, tiempo, num_lote);
+    system("pause");
+    Proceso p = Proceso (id, operando_1, operacion, operando_2, tiempo, num_lote);
     return p;
 }
 

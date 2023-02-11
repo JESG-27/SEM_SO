@@ -25,7 +25,6 @@ void Lote::print()
     {
         Proceso pro = *it;
         cout << "   ID: " << pro.getId() << endl;
-        cout << "   Programador: " << pro.getProgramador() << endl;
         cout << "   Operacion: " << pro.getOperando_1() << pro.getOperacion() << pro.getOperando_2() << endl;
         cout << "   Tiempo: " << pro.getTiempo() << endl;
     }
@@ -48,7 +47,6 @@ void Lote::print_ejecucion()
     {
         Proceso pro = *it;
         cout << "   ID: " << pro.getId();
-        cout << "   Programador: " << pro.getProgramador();
         cout << "   Tiempo: " << pro.getTiempo() << endl;
     }
 }

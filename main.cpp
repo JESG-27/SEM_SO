@@ -2,6 +2,7 @@
 #include <queue>
 #include <list>
 #include <windows.h>
+#include <time.h>
 #include "proceso.h"
 #include "lote.h"
 #include "funciones.h"

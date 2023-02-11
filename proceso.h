@@ -8,7 +8,6 @@ using namespace std;
 
 class Proceso{
     int id;
-    string programador;
     float operando_1;
     string operacion;
     float operando_2;
@@ -18,13 +17,10 @@ class Proceso{
 
 public:
     Proceso();
-    Proceso(int id, const string &programador, float operando_1, const string &operacion, float operando_2, int tiempo, int numero_lote);
+    Proceso(int id, float operando_1, const string &operacion, float operando_2, int tiempo, int numero_lote);
     
     void setId(int dato);
     int getId();
-    
-    void setProgramador(const string &dato);
-    string getProgramador();
     
     void setOperando_1(float dato);
     float getOperando_1();
