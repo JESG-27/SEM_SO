@@ -73,30 +73,34 @@ int main(){
             tiempo_res = proceso_actual.getTiempoRes();
             TTE=0;
 
-            while (tiempo_res != 0)
+            while (tiempo_res >= 0)
             {
                 if (kbhit())
                 {
                     ch = getch();
-                    cout << "Capturo " << ch << endl;
-                }
+                    fflush(stdin);
+                    //cout << "Capturo " << ch << endl;
 
-                if(ch =='i'){
-                    proceso_actual.setEstado("interrumpido");
-                    fflush( stdin );
-                }else if (ch =='e')
-                {
-                    proceso_actual.setEstado("Error");
-                    fflush( stdin );
+                    if(ch =='i')                                    // Interrupción
+                    {
+                        cout << "Interrupcion" << endl;
+                        proceso_actual.setEstado("Interrumpido");
+                        lote_actual.agregarProceso(proceso_actual);
+                        break;
+                    }
 
-                }else if (ch =='c'){
-                    proceso_actual.setEstado("continuando");
-                    fflush( stdin );
+                    else if (ch =='e')                              // Error
+                    {
+                        cout << "Error" << endl;
+                        proceso_actual.setEstado("Error");
+                        procesos_terminados.push_back(proceso_actual);
+                        break;
+                    }
 
-                }else if (ch =='p'){
-                    proceso_actual.setEstado("pausado");
-
-                    while(ch !='c'){
+                    else if (ch =='p')
+                    {
+                        proceso_actual.setEstado("Pausa");
+                        fflush( stdin );
 
                         system("cls");
                         cout << "Proceso en ejecucion:" << endl;
@@ -104,18 +108,20 @@ int main(){
                         cout << "   Tiempo transcurrido: " << TTE;
                         cout << "   Tiempo restante: " << proceso_actual.getTiempoRes() << endl; 
                         cout << "Presiona c para continuar: ";
-                        ch=getch();
-                        
-                        
+
+                        while (true)
+                        {
+                            ch = getch();
+                            if (ch == 'c')
+                            {
+                                cout << "Continua" << endl;
+                                proceso_actual.setEstado("Ejecutando");
+                                break;
+                            }
+                        }
                     }
-                    fflush( stdin );
-
-
-                }else{
-                    proceso_actual.setEstado("Terminado");
-                    fflush( stdin );
                 }
-                
+
 
                 cout << "Lotes Pendientes: " << cola_lotes.size() << endl;
                 
@@ -126,7 +132,7 @@ int main(){
 
                 cout << "Proceso en ejecucion:" << endl;
                 proceso_actual.print_ejecucion();
-                cout << "   Tiempo transcurrido: " << TTE;
+                cout << "   Tiempo transcurrido: " << proceso_actual.getTiempo()-proceso_actual.getTiempoRes();
                 cout << "   Tiempo restante: " << proceso_actual.getTiempoRes() << endl;                           
 
                 
@@ -145,9 +151,13 @@ int main(){
                 system("cls");
             }
 
-            ejecutar_proceso(proceso_actual);       //Valor de la operacion 
-            procesos_terminados.push_back(proceso_actual);
-
+            if (proceso_actual.getTiempoRes() == 0)
+            {
+                ejecutar_proceso(proceso_actual);       //Valor de la operacion 
+                proceso_actual.setEstado("Terminado");
+                procesos_terminados.push_back(proceso_actual);
+            }
+            
             if (cola_lotes.size() == 0 && lote_actual.size() == 0)
             {
                 cout << "Tiempo total:" << global << endl;

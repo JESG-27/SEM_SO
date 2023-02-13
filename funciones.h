@@ -93,7 +93,11 @@ Proceso capturarProceso (Lote &lote, list<int> &ids, int num_lote)
     // Tiempo
     do
     {
-        tiempo = rand()%(16);
+        tiempo = rand()%16;
+        if (tiempo <= 11)
+        {
+            tiempo = tiempo+5;
+        }
         cout << "Tiempo: " << tiempo << endl;
         if (tiempo <= 0)
         {
@@ -101,10 +105,8 @@ Proceso capturarProceso (Lote &lote, list<int> &ids, int num_lote)
         }
     } while (tiempo <= 0);
 
-    estado = "Nuevo";
-
     system("pause");
-    Proceso p = Proceso (id, operando_1, operacion, operando_2, tiempo, num_lote, estado);
+    Proceso p = Proceso (id, operando_1, operacion, operando_2, tiempo, num_lote, "Nuevo");
     return p;
 }
 
@@ -139,5 +141,6 @@ void ejecutar_proceso(Proceso &p)
         int num_2 = (int)operando_2;
         int resultado = num_1%num_2;
         p.setResultado((float)resultado);
-    }   
+    }
+
 }
