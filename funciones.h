@@ -72,7 +72,7 @@ Proceso capturarProceso (Lote &lote, list<int> &ids, int num_lote)
     do
     {
         cout << "Operacion" << endl;
-        operando_1 = rand()%500;
+        operando_1 = rand()%10000;
         cout << "   Operando 1: "<< operando_1 << endl;
 
         int oper = rand()%5;
@@ -98,7 +98,7 @@ Proceso capturarProceso (Lote &lote, list<int> &ids, int num_lote)
         }
         cout << "   Operador: " << operacion << endl;
 
-        operando_2 = rand()%500;
+        operando_2 = rand()%10000;
         cout << "   Operando 2: " << operando_2 << endl;
 
         operacion_valida = operacionValida(operando_1, operacion, operando_2);
@@ -113,6 +113,7 @@ Proceso capturarProceso (Lote &lote, list<int> &ids, int num_lote)
     // Tiempo
     do
     {
+        srand(time(NULL));
         tiempo = rand()%16;
         if (tiempo <= 11)
         {
@@ -124,6 +125,8 @@ Proceso capturarProceso (Lote &lote, list<int> &ids, int num_lote)
             cout << "Tiempo no valido" << endl;
         }
     } while (tiempo <= 0);
+
+    Sleep(1000);
 
     Proceso p = Proceso (id, operando_1, operacion, operando_2, tiempo, num_lote, "Nuevo");
     return p;
