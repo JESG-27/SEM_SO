@@ -102,10 +102,25 @@ int main(){
                         fflush( stdin );
 
                         system("cls");
+                        cout << "Lotes Pendientes: " << cola_lotes.size() << endl;
+                
+                        cout << "Tiempo total transcurrido: " << global <<endl; // Contador global
+
+                        cout << "Lote en ejecucion:" << endl;
+                        lote_actual.print_ejecucion();
+
                         cout << "Proceso en ejecucion:" << endl;
                         proceso_actual.print_ejecucion();
                         cout << "   Tiempo transcurrido: " << proceso_actual.getTiempo()-proceso_actual.getTiempoRes();
-                        cout << "   Tiempo restante: " << proceso_actual.getTiempoRes() << endl; 
+                        cout << "   Tiempo restante: " << proceso_actual.getTiempoRes() << endl;                           
+
+                        
+                        cout << "Procesos terminados:" << endl;
+                        for (auto it = procesos_terminados.begin(); it != procesos_terminados.end(); it++)
+                        {
+                            Proceso pro = *it;
+                            pro.print_terminado();
+                        }
                         cout << "Presiona c para continuar: ";
 
                         while (true)

@@ -111,7 +111,6 @@ void Proceso::print_ejecucion()
 {
     cout << "   ID: " << id;
     cout << "   Operacion: " << operando_1 << operacion << operando_2;
-    cout << "   Estado: " << estado;
     cout << "   Tiempo estimado: " << tiempo;
 }
 
@@ -119,7 +118,9 @@ void Proceso::print_terminado()
 {
     cout << "   ID: " << id;
     cout << "   Operacion: " << operando_1 << operacion << operando_2;
-    cout << "   Resultado: " << resultado;
+    if(estado!="Error"){
+        cout << "   Resultado: " << resultado;
+    }
     cout << "   Estado: " << estado;
     cout << "   Lote: " << num_lote << endl;
 }
