@@ -53,7 +53,7 @@ Proceso capturarProceso (Lote &lote, list<int> &ids, int num_lote)
     // ID
     do
     {
-        id = rand()%50;
+        id = ids.size()+1;
         cout << "ID: " << id << endl;
         id_existe = existente(id, ids);
 
@@ -75,8 +75,28 @@ Proceso capturarProceso (Lote &lote, list<int> &ids, int num_lote)
         operando_1 = rand()%500;
         cout << "   Operando 1: "<< operando_1 << endl;
 
-        cout << "   Operador: ";
-        getline(cin, operacion);
+        int oper = rand()%5;
+        if (oper == 0)
+        {
+            operacion = "+";
+        }
+        else if (oper == 1)
+        {
+            operacion = "-";
+        }
+        else if (oper == 2)
+        {
+            operacion = "/";
+        }
+        else if (oper == 3)
+        {
+            operacion = "*";
+        }
+        else if (oper == 4)
+        {
+            operacion = "%";
+        }
+        cout << "   Operador: " << operacion << endl;
 
         operando_2 = rand()%500;
         cout << "   Operando 2: " << operando_2 << endl;
@@ -105,7 +125,6 @@ Proceso capturarProceso (Lote &lote, list<int> &ids, int num_lote)
         }
     } while (tiempo <= 0);
 
-    system("pause");
     Proceso p = Proceso (id, operando_1, operacion, operando_2, tiempo, num_lote, "Nuevo");
     return p;
 }
