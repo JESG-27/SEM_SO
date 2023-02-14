@@ -12,8 +12,8 @@ using namespace std;
 
 int main(){
 
-    int num_pro=0, tiempo_res, global = 0, TTE=0, TRE=0;        // Número de procesos
-    float num_lotes;                                        // Número de lotes
+    int num_pro=0, tiempo_res, global = 0;        // Número de procesos
+    float num_lotes;                              // Número de lotes
     char ch;
     size_t i=0;
     queue<Lote> cola_lotes;
@@ -71,15 +71,14 @@ int main(){
             Proceso proceso_actual = lote_actual.front();
             lote_actual.pop_front();
             tiempo_res = proceso_actual.getTiempoRes();
-            TTE=0;
 
             while (tiempo_res >= 0)
             {
                 if (kbhit())
                 {
                     ch = getch();
+                    ch = tolower(ch);
                     fflush(stdin);
-                    //cout << "Capturo " << ch << endl;
 
                     if(ch =='i')                                    // Interrupción
                     {
@@ -105,13 +104,14 @@ int main(){
                         system("cls");
                         cout << "Proceso en ejecucion:" << endl;
                         proceso_actual.print_ejecucion();
-                        cout << "   Tiempo transcurrido: " << TTE;
+                        cout << "   Tiempo transcurrido: " << proceso_actual.getTiempo()-proceso_actual.getTiempoRes();
                         cout << "   Tiempo restante: " << proceso_actual.getTiempoRes() << endl; 
                         cout << "Presiona c para continuar: ";
 
                         while (true)
                         {
                             ch = getch();
+                            ch = tolower(ch);
                             if (ch == 'c')
                             {
                                 cout << "Continua" << endl;
@@ -146,7 +146,6 @@ int main(){
                 Sleep(1000);        //Detener por un segundo 
                 global++;           //Aumenta el contador global 
                 proceso_actual.setTiempoRes(tiempo_res--);
-                TTE++;              //Tiempo transcurrido
 
                 system("cls");
             }
