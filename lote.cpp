@@ -7,11 +7,8 @@ Lote::Lote()
 
 void Lote::agregarProceso(const Proceso &p)
 {
-    if (cont<4)
-    {
-        lista_procesos.push_back(p);
-        cont++;
-    }
+    lista_procesos.push_back(p);
+    cont++;
 }
 
 int Lote::size()

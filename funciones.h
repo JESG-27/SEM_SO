@@ -40,7 +40,7 @@ bool operacionValida (float operando_1, string operador, float operando_2)
     }
 }
 
-Proceso capturarProceso (Lote &lote, list<int> &ids, int num_lote)
+Proceso capturarProceso (Lote &lote, list<int> &ids)
 {
     srand(time(NULL));
     int id;
@@ -128,7 +128,7 @@ Proceso capturarProceso (Lote &lote, list<int> &ids, int num_lote)
 
     Sleep(1000);
 
-    Proceso p = Proceso (id, operando_1, operacion, operando_2, tiempo, num_lote, "Nuevo");
+    Proceso p = Proceso (id, operando_1, operacion, operando_2, tiempo, "nuevo");
     return p;
 }
 
