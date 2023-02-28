@@ -44,7 +44,8 @@ void Lote::print_ejecucion()
     {
         Proceso pro = *it;
         cout << "   ID: " << pro.getId();
-        cout << "   Tiempo estimado: " << pro.getTiempo();
+        //cout << "   Tiempo estimado: " << pro.getTiempo();
+        cout << "   Tiempo bloqueado: " << pro.getTiempoBlo();
         cout << "   Tiempo transcurrido: " << pro.getTiempo()-pro.getTiempoRes() << endl;
     }
 }

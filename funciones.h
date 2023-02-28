@@ -166,3 +166,31 @@ void ejecutar_proceso(Proceso &p)
     }
 
 }
+
+void tiempoBloqueo (Lote &bloqueados, Lote &listos)
+{
+    Proceso proceso_actual = bloqueados.front();
+    int inicial = proceso_actual.getId();
+
+    do
+    {
+        if (proceso_actual.getTiempoBlo() != 0)
+        {
+            proceso_actual.setTiempoBlo(proceso_actual.getTiempoBlo()-1);
+        }
+        
+        bloqueados.agregarProceso(proceso_actual);
+        bloqueados.pop_front();
+        proceso_actual = bloqueados.front();
+    }
+    while(inicial != proceso_actual.getId());
+
+    //proceso_actual = bloqueados.front();
+
+    if (proceso_actual.getTiempoBlo() == 0)
+    {
+        bloqueados.pop_front();
+        listos.agregarProceso(proceso_actual);
+    }
+
+}

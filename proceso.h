@@ -51,6 +51,7 @@ public:
 
     void print_ejecucion();
     void print_terminado();
+
 };
 
 #endif

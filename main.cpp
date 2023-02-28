@@ -13,7 +13,7 @@ using namespace std;
 int main(){
 
     int num_pro = 0, tiempo_res, global = 0, memoria = 0;        // Número de procesos
-    size_t i=0;
+    size_t i=0, cont=0;
     list<int> ids;
     char ch;
 
@@ -63,27 +63,55 @@ int main(){
                     memoria = listos.size() + ejecucion.size() + bloqueados.size();
                 }
             }
+            Proceso proceso_actual = listos.front();
+            listos.pop_front();
+            ejecucion.agregarProceso(proceso_actual);
         }
 
-        Proceso proceso_actual = listos.front();
-        listos.pop_front();
-        ejecucion.agregarProceso(proceso_actual);
 
-        while (proceso_actual.getTiempoRes() != 0)
-        {
-            proceso_actual.print_ejecucion();
-            cout << "   Tiempo restante: "<< proceso_actual.getTiempoRes() << endl;
-            cout << "Nuevos: " << nuevos.size() << endl;
-            cout << "   Memoria: " << memoria << endl;
-            cout << "   Listos: " << listos.size() << endl;
-            cout << "   Ejecucion: " << ejecucion.size() << endl;
-            cout << "   Bloqueados: " << bloqueados.size() << endl;
-            cout << "Terminados: " << terminados.size() << endl;
+        while (true)
+        {   
+            cout << "Tiempo total: " << cont << endl;
+
+            if (listos.size() != 0)
+            {
+                Proceso proceso_actual = ejecucion.front();
+
+                if (proceso_actual.getTiempoRes() != 0)
+                {
+                    proceso_actual.print_ejecucion();
+                    cout << "   Tiempo restante: "<< proceso_actual.getTiempoRes() << endl;
+                    cout << "Nuevos: " << nuevos.size() << endl;
+                    cout << "Memoria: " << memoria << endl;
+                    cout << "   Listos: " << listos.size() << endl;
+                    cout << "   Ejecucion: " << ejecucion.size() << endl;
+                    cout << "   Bloqueados: " << bloqueados.size() << endl;
+                    cout << "Terminados: " << terminados.size() << endl;
+                    proceso_actual.setTiempoRes(proceso_actual.getTiempoRes()-1);
+                }
+
+                else if (proceso_actual.getTiempoRes() == 0)
+                {
+                    ejecucion.pop_front();
+                    ejecutar_proceso(proceso_actual);
+                    terminados.push_back(proceso_actual);
+                    break;
+                }
+            }
+            
+
+            // Actualización de bloqueados
+            if (bloqueados.size() != 0)
+            {
+                cout << "Actualizo" << endl;
+                tiempoBloqueo(bloqueados, listos);
+                bloqueados.print_ejecucion();
+            }
 
             Sleep(1000);
+            cont++;
 
-            proceso_actual.setTiempoRes(proceso_actual.getTiempoRes()-1);
-
+            // Pulsaciones de teclas
             if (kbhit())
             {
                 ch = getch();
@@ -92,22 +120,29 @@ int main(){
 
                 if(ch =='i')                                    // Bloqueo
                 {
-                    proceso_actual.setEstado("bloqueado");
-                    ejecucion.pop_front();
-                    proceso_actual.setTiempoBlo(5);
-                    bloqueados.agregarProceso(proceso_actual);
-                    system("cls");
-                    break;
+                    if (ejecucion.size() != 0)
+                    {
+                        Proceso proceso_actual = ejecucion.front();
+                        ejecucion.pop_front();
+                        proceso_actual.setTiempoBlo(5);
+                        bloqueados.agregarProceso(proceso_actual);
+                        system("cls");
+                        break;    
+                    }
                 }
 
                 
                 else if (ch =='e')                              // Error
                 {
-                    proceso_actual.setEstado("error");
-                    ejecucion.pop_front();
-                    terminados.push_back(proceso_actual);
-                    system("cls");
-                    break;
+                    if (ejecucion.size() != 0)
+                    {
+                        Proceso proceso_actual = ejecucion.front();
+                        proceso_actual.setEstado("error"); 
+                        ejecucion.pop_front();
+                        terminados.push_back(proceso_actual);
+                        system("cls");
+                        break;
+                    }
                 }
 
                 else if (ch == 'p')
@@ -118,7 +153,6 @@ int main(){
                         ch = tolower(ch);
                         if (ch == 'c')
                         {
-                            proceso_actual.setEstado("ejecucion");
                             break;
                         }
                     }
@@ -128,30 +162,10 @@ int main(){
             
             system("cls");
         }
-
-        if (proceso_actual.getTiempoRes() == 0)
-        {
-            ejecucion.pop_front();
-            ejecutar_proceso(proceso_actual);
-            terminados.push_back(proceso_actual);
-        }
-
-        
-            
-        //     if (cola_lotes.size() == 0 && lote_actual.size() == 0)
-        //     {
-        //         cout << "Tiempo total:" << global << endl;
-        //         cout << "Procesos terminados:" << endl;
-        //         for (auto it = procesos_terminados.begin(); it != procesos_terminados.end(); it++)
-        //         {
-        //             Proceso pro = *it;
-        //             pro.print_terminado();
-        //         }
-        //     }
-
-        // }    
+   
     }
 
     cout << "Termino" << endl;
+
     return 0;
 }
