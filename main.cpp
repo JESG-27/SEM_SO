@@ -63,10 +63,11 @@ int main(){
                     memoria = listos.size() + ejecucion.size() + bloqueados.size();
                 }
             }
-            Proceso proceso_actual = listos.front();
-            listos.pop_front();
-            ejecucion.agregarProceso(proceso_actual);
         }
+
+        Proceso proceso_actual = listos.front();
+        listos.pop_front();
+        ejecucion.agregarProceso(proceso_actual);
 
 
         while (true)
@@ -95,6 +96,9 @@ int main(){
                     ejecucion.pop_front();
                     ejecutar_proceso(proceso_actual);
                     terminados.push_back(proceso_actual);
+                    proceso_actual = listos.front();
+                    ejecucion.agregarProceso(proceso_actual);
+                    listos.pop_front();
                     break;
                 }
             }
