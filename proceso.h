@@ -11,9 +11,14 @@ class Proceso{
     float operando_1;
     string operacion;
     float operando_2;
-    int tiempo;
-    int tiempo_res;
-    int tiempo_blo;
+
+    int tiempo;                     // Tiempo estimado
+    int tiempo_res;                 // Tiempo restante
+    int tiempo_blo;                 // Tiempo bloqueado
+    int tiempo_llegada;             // Tiempo llegada
+    int tiempo_respuesta;           // Tiempo respuesta
+    int tiempo_finalizacion;        // Tiempo finalización
+    
     float resultado;
     string estado;
 
@@ -42,6 +47,15 @@ public:
 
     void setTiempoBlo(int dato);
     int getTiempoBlo();
+
+    void setTiempoLLegada(int dato);
+    int getTiempoLLegada();
+
+    void setTiempoRespuesta(int dato);
+    int getTiempoRespuesta();
+
+    void setTiempoFinalizacion(int dato);
+    int getTiempoFinalizacion();
 
     void setResultado(float dato);
     float getResultado();

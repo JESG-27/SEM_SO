@@ -14,6 +14,8 @@ Proceso::Proceso(int id, float operando_1, const string &operacion, float operan
     this->tiempo = tiempo;
     this->tiempo_res = tiempo;
     this->tiempo_blo = 0;
+    this->tiempo_llegada = -1;
+    this->tiempo_respuesta = -1;
     this->estado = estado;
 }
 
@@ -85,6 +87,36 @@ void Proceso::setTiempoBlo(int dato)
 int Proceso::getTiempoBlo()
 {
     return tiempo_blo;
+}
+
+void Proceso::setTiempoLLegada(int dato)
+{
+    tiempo_llegada = dato;
+}
+
+int Proceso::getTiempoLLegada()
+{
+    return tiempo_llegada;
+}
+
+void Proceso::setTiempoRespuesta(int dato)
+{
+    tiempo_respuesta = dato;
+}
+
+int Proceso::getTiempoRespuesta()
+{
+    return tiempo_respuesta;
+}
+
+void Proceso::setTiempoFinalizacion(int dato)
+{
+    tiempo_finalizacion = dato;
+}
+
+int Proceso::getTiempoFinalizacion()
+{
+    return tiempo_finalizacion;
 }
 
 void Proceso::setResultado(float dato)

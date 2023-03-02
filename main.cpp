@@ -58,7 +58,7 @@ int main(){
                 {
                     Proceso p = nuevos.front();
                     nuevos.pop_front();
-                    listos.agregarProceso(p);
+                    listos.agregarProcesoListos(p, cont);
                     faltantes--; 
                     memoria = listos.size() + ejecucion.size() + bloqueados.size();
                 }
@@ -69,38 +69,41 @@ int main(){
         {
             Proceso proceso_actual = listos.front();
             listos.pop_front();
-            ejecucion.agregarProceso(proceso_actual);
+            ejecucion.agregarProcesoEjecucion(proceso_actual, cont);
         }
 
         while (true)
         {   
             cout << "Tiempo total: " << cont << endl;
+            cout << "Nuevos: " << nuevos.size() << endl;
 
+            cout << endl << "Listos: " << endl;
+            listos.print_listos();
             if (listos.size() != 0 || ejecucion.size() != 0)
             {
                 if (ejecucion.size() == 0)
                 {
                     Proceso proceso_actual = listos.front();
                     listos.pop_front();
-                    ejecucion.agregarProceso(proceso_actual);
+                    ejecucion.agregarProcesoEjecucion(proceso_actual, cont);
                 }
                 
                 Proceso proceso_actual = ejecucion.front();
 
+                cout << endl << "Ejecucion" << endl;
+                ejecucion.print_ejecucion();
+
                 if (proceso_actual.getTiempoRes() != 0)
                 {
-                    cout << "Ejecucion" << endl;
-                    proceso_actual.print_ejecucion();
-                    cout << "   Tiempo restante: "<< proceso_actual.getTiempoRes() << endl;
                     proceso_actual.setTiempoRes(proceso_actual.getTiempoRes()-1);
                     ejecucion.pop_front();
-                    ejecucion.agregarProceso(proceso_actual);
+                    ejecucion.agregarProcesoEjecucion(proceso_actual, cont);
                 }
 
                 else if (proceso_actual.getTiempoRes() == 0)
                 {
                     ejecucion.pop_front();
-                    ejecutar_proceso(proceso_actual);
+                    ejecutar_proceso(proceso_actual, cont);
                     terminados.push_back(proceso_actual);
                     system("cls");
                     break;
@@ -109,11 +112,11 @@ int main(){
             
 
             // Actualización de bloqueados
+            cout << endl << "Bloqueados: " << endl;
             if (bloqueados.size() != 0)
             {
-                cout << endl << "Bloqueados" << endl;
-                tiempoBloqueo(bloqueados, listos);
-                bloqueados.print_ejecucion();
+                tiempoBloqueo(bloqueados, listos, cont);
+                bloqueados.print_bloqueados();
             }
 
             if (bloqueados.size() == 0 && listos.size() != 0 && ejecucion.size() == 0)
@@ -122,12 +125,25 @@ int main(){
                 break;
             }
 
-            cout << "Nuevos: " << nuevos.size() << endl;
-            cout << "Memoria: " << memoria << endl;
-            cout << "   Listos: " << listos.size() << endl;
-            cout << "   Ejecucion: " << ejecucion.size() << endl;
-            cout << "   Bloqueados: " << bloqueados.size() << endl;
-            cout << "Terminados: " << terminados.size() << endl << endl;
+            // Terminados
+            cout << endl << "Terminados: " << endl;
+            for (auto it = terminados.begin(); it != terminados.end(); it++)
+            {
+                Proceso pro = *it;
+                cout << "   ID: " << pro.getId();
+                cout << "   Operacion: " << pro.getOperando_1() << pro.getOperacion() << pro.getOperando_2();
+                
+                if (pro.getEstado() == "error")
+                {
+                    cout << "   Resultado: error";
+                }
+
+                else
+                {
+                    cout << "   Resultado: " << pro.getResultado();
+                }
+                cout << endl;
+            }
 
             Sleep(1000);
             cont++;
@@ -158,7 +174,8 @@ int main(){
                     if (ejecucion.size() != 0)
                     {
                         Proceso proceso_actual = ejecucion.front();
-                        proceso_actual.setEstado("error"); 
+                        proceso_actual.setEstado("error");
+                        proceso_actual.setTiempoFinalizacion(cont); 
                         ejecucion.pop_front();
                         terminados.push_back(proceso_actual);
                         system("cls");
@@ -186,7 +203,30 @@ int main(){
    
     }
 
-    cout << "Termino" << endl;
+    cout << endl << "Terminados: " << endl;
+    for (auto it = terminados.begin(); it != terminados.end(); it++)
+    {
+        Proceso pro = *it;
+        cout << "   ID: " << pro.getId();
+        cout << "   Operacion: " << pro.getOperando_1() << pro.getOperacion() << pro.getOperando_2();
+        
+        if (pro.getEstado() == "error")
+        {
+            cout << "   Resultado: error" << endl;
+        }
+
+        else
+        {
+            cout << "   Resultado: " << pro.getResultado() << endl;
+        }
+        cout << "       Tiempo estimado: " << pro.getTiempo() << endl;
+        cout << "       Tiempo llegada: " << pro.getTiempoLLegada() << endl;
+        cout << "       Tiempo finalizacion: " << pro.getTiempoFinalizacion() << endl;
+        cout << "       Tiempo retorno: " << pro.getTiempoFinalizacion()-pro.getTiempoLLegada() << endl;
+        cout << "       Tiempo respuesta: " << pro.getTiempoRespuesta()-pro.getTiempoLLegada() << endl;
+        cout << "       Tiempo espera: " << (pro.getTiempoFinalizacion()-pro.getTiempoLLegada())-(pro.getTiempo()-pro.getTiempoRes()) << endl;
+        cout << "       Tiempo servicio: " << pro.getTiempo()-pro.getTiempoRes() << endl << endl;
+    }
 
     return 0;
 }

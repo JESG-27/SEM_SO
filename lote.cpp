@@ -11,6 +11,28 @@ void Lote::agregarProceso(const Proceso &p)
     cont++;
 }
 
+void Lote::agregarProcesoListos(const Proceso &p, int llegada)
+{
+    Proceso proceso = p;
+    if (proceso.getTiempoLLegada() == -1)
+    {
+        proceso.setTiempoLLegada(llegada);    
+    }
+    lista_procesos.push_back(proceso);
+    cont++;
+}
+
+void Lote::agregarProcesoEjecucion(const Proceso &p, int llegada)
+{
+    Proceso proceso = p;
+    if (proceso.getTiempoRespuesta() == -1)
+    {
+        proceso.setTiempoRespuesta(llegada);    
+    }
+    lista_procesos.push_back(proceso);
+    cont++;
+}
+
 int Lote::size()
 {
     return cont;
@@ -38,14 +60,35 @@ void Lote::pop_front()
     cont--;
 }
 
+void Lote::print_listos()
+{
+    for (auto it = lista_procesos.begin(); it != lista_procesos.end(); it++)
+    {
+        Proceso pro = *it;
+        cout << "   ID: " << pro.getId();
+        cout << "   Tiempo estimado: " << pro.getTiempo();
+        cout << "   Tiempo transcurrido: " << pro.getTiempo()-pro.getTiempoRes() << endl;
+    }
+}
+
 void Lote::print_ejecucion()
 {
     for (auto it = lista_procesos.begin(); it != lista_procesos.end(); it++)
     {
         Proceso pro = *it;
         cout << "   ID: " << pro.getId();
-        //cout << "   Tiempo estimado: " << pro.getTiempo();
-        cout << "   Tiempo bloqueado: " << pro.getTiempoBlo();
-        cout << "   Tiempo transcurrido: " << pro.getTiempo()-pro.getTiempoRes() << endl;
+        cout << "   Operacion: " << pro.getOperando_1() << pro.getOperacion() << pro.getOperando_2();
+        cout << "   Tiempo transcurrido: " << pro.getTiempo()-pro.getTiempoRes();
+        cout << "   Tiempo restante: " << pro.getTiempoRes() << endl;
+    }
+}
+
+void Lote::print_bloqueados()
+{
+    for (auto it = lista_procesos.begin(); it != lista_procesos.end(); it++)
+    {
+        Proceso pro = *it;
+        cout << "   ID: " << pro.getId();
+        cout << "   Tiempo bloqueado (restante): " << pro.getTiempoBlo() << endl;
     }
 }

@@ -72,7 +72,7 @@ Proceso capturarProceso (Lote &lote, list<int> &ids)
     do
     {
         cout << "Operacion" << endl;
-        operando_1 = rand()%10000;
+        operando_1 = rand()%100;
         cout << "   Operando 1: "<< operando_1 << endl;
 
         int oper = rand()%5;
@@ -98,7 +98,7 @@ Proceso capturarProceso (Lote &lote, list<int> &ids)
         }
         cout << "   Operador: " << operacion << endl;
 
-        operando_2 = rand()%10000;
+        operando_2 = rand()%100;
         cout << "   Operando 2: " << operando_2 << endl;
 
         operacion_valida = operacionValida(operando_1, operacion, operando_2);
@@ -132,7 +132,7 @@ Proceso capturarProceso (Lote &lote, list<int> &ids)
     return p;
 }
 
-void ejecutar_proceso(Proceso &p)
+void ejecutar_proceso(Proceso &p, int cont)
 {
     float operando_1, operando_2;
     string operador;
@@ -165,9 +165,10 @@ void ejecutar_proceso(Proceso &p)
         p.setResultado((float)resultado);
     }
 
+    p.setTiempoFinalizacion(cont);
 }
 
-void tiempoBloqueo (Lote &bloqueados, Lote &listos)
+void tiempoBloqueo (Lote &bloqueados, Lote &listos, int tiempo)
 {
     Proceso proceso_actual = bloqueados.front();
     int inicial = proceso_actual.getId();
@@ -190,7 +191,7 @@ void tiempoBloqueo (Lote &bloqueados, Lote &listos)
     if (proceso_actual.getTiempoBlo() == 0)
     {
         bloqueados.pop_front();
-        listos.agregarProceso(proceso_actual);
+        listos.agregarProcesoListos(proceso_actual, tiempo);
     }
 
 }
