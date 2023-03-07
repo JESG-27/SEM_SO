@@ -186,12 +186,9 @@ void tiempoBloqueo (Lote &bloqueados, Lote &listos, int tiempo)
     }
     while(inicial != proceso_actual.getId());
 
-    //proceso_actual = bloqueados.front();
-
     if (proceso_actual.getTiempoBlo() == 0)
     {
         bloqueados.pop_front();
         listos.agregarProcesoListos(proceso_actual, tiempo);
     }
-
 }

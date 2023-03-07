@@ -73,12 +73,17 @@ int main(){
         }
 
         while (true)
-        {   
+        {               
+            // Actualización de bloqueados
+            if (bloqueados.size() != 0)
+            {
+                tiempoBloqueo(bloqueados, listos, cont);
+            }
+            
             cout << "Tiempo total: " << cont << endl;
             cout << "Nuevos: " << nuevos.size() << endl;
 
             cout << endl << "Listos: " << endl;
-            listos.print_listos();
             if (listos.size() != 0 || ejecucion.size() != 0)
             {
                 if (ejecucion.size() == 0)
@@ -89,6 +94,7 @@ int main(){
                 }
                 
                 Proceso proceso_actual = ejecucion.front();
+                listos.print_listos();
 
                 cout << endl << "Ejecucion" << endl;
                 ejecucion.print_ejecucion();
@@ -111,11 +117,11 @@ int main(){
             }
             
 
-            // Actualización de bloqueados
+            // Impresión de bloqueados
             cout << endl << "Bloqueados: " << endl;
             if (bloqueados.size() != 0)
             {
-                tiempoBloqueo(bloqueados, listos, cont);
+                //tiempoBloqueo(bloqueados, listos, cont);
                 bloqueados.print_bloqueados();
             }
 
