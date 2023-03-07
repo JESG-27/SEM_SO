@@ -18,6 +18,7 @@ void Lote::agregarProcesoListos(const Proceso &p, int llegada)
     {
         proceso.setTiempoLLegada(llegada);    
     }
+    proceso.setEstado("listo");
     lista_procesos.push_back(proceso);
     cont++;
 }
@@ -29,6 +30,7 @@ void Lote::agregarProcesoEjecucion(const Proceso &p, int llegada)
     {
         proceso.setTiempoRespuesta(llegada);    
     }
+    proceso.setEstado("ejecucion");
     lista_procesos.push_back(proceso);
     cont++;
 }
@@ -91,5 +93,40 @@ void Lote::print_bloqueados()
         Proceso pro = *it;
         cout << "   ID: " << pro.getId();
         cout << "   Tiempo bloqueado (restante): " << pro.getTiempoBlo() << endl;
+    }
+}
+
+void Lote::BCP_nuevos()
+{
+    for (auto it = lista_procesos.begin(); it != lista_procesos.end(); it++)
+    {
+        Proceso pro = *it;
+        cout << "   ID: " << pro.getId() << endl;
+        cout << "       Estado: " << pro.getEstado() << endl;
+        cout << "       Operacion: " << pro.getOperando_1() << pro.getOperacion() << pro.getOperando_2() << endl << endl;
+    }
+}
+
+void Lote::BCP_listos_ejecucion_bloqueados(int cont)
+{
+    for (auto it = lista_procesos.begin(); it != lista_procesos.end(); it++)
+    {
+        Proceso pro = *it;
+        cout << "   ID: " << pro.getId() << endl;
+        cout << "       Estado: " << pro.getEstado() << endl;
+        cout << "       Operacion: " << pro.getOperando_1() << pro.getOperacion() << pro.getOperando_2() << endl;
+        cout << "       Tiempo de llegada: " << pro.getTiempoLLegada() << endl;
+        cout << "       Tiempo espera: " << (cont-pro.getTiempoLLegada())-(pro.getTiempo()-pro.getTiempoRes()) << endl;
+        cout << "       Tiempo de servicio: " << pro.getTiempo()-pro.getTiempoRes()  << endl;
+        cout << "       Tiempo restante: " << pro.getTiempoRes()  << endl;
+        if (pro.getTiempoRespuesta() != -1)
+        {
+            cout << "       Tiempo respuesta: " << pro.getTiempoRespuesta()-pro.getTiempoLLegada() << endl;
+        }
+        if (pro.getEstado() == "bloqueado")
+        {
+            cout << "       Tiempo bloqueado (restante): " << pro.getTiempoBlo() << endl;
+        }
+        cout << endl;
     }
 }

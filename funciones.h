@@ -192,3 +192,59 @@ void tiempoBloqueo (Lote &bloqueados, Lote &listos, int tiempo)
         listos.agregarProcesoListos(proceso_actual, tiempo);
     }
 }
+
+void BCP(Lote &nuevos, Lote &listos, Lote &ejecucion, Lote &bloqueados, list<Proceso> &terminados, int cont)
+{
+    system("cls");
+    cout << "----------------------------------------------------------------------" << endl;
+    cout << "Bloque de Control de Procesos" << endl << endl;
+
+    cout << "Nuevos" << endl;
+    if (nuevos.size() > 0)
+    {
+        nuevos.BCP_nuevos();
+    }
+
+    cout << endl << "Listos" << endl;
+    if (listos.size() > 0)
+    {
+        listos.BCP_listos_ejecucion_bloqueados(cont);
+    }
+
+    cout << endl << "Ejecucion" << endl;
+    if (ejecucion.size() > 0)
+    {
+        ejecucion.BCP_listos_ejecucion_bloqueados(cont);
+    }
+
+    cout << endl << "Bloqueados" << endl;
+    if (bloqueados.size() > 0)
+    {
+        bloqueados.BCP_listos_ejecucion_bloqueados(cont);
+    }
+
+    cout << endl << "Terminados" << endl;
+    for (auto it = terminados.begin(); it != terminados.end(); it++)
+    {
+        Proceso pro = *it;
+        cout << "   ID: " << pro.getId();
+        cout << "   Operacion: " << pro.getOperando_1() << pro.getOperacion() << pro.getOperando_2();
+        
+        if (pro.getEstado() == "error")
+        {
+            cout << "   Resultado: error" << endl;
+        }
+
+        else
+        {
+            cout << "   Resultado: " << pro.getResultado() << endl;
+        }
+        cout << "       Tiempo estimado: " << pro.getTiempo() << endl;
+        cout << "       Tiempo llegada: " << pro.getTiempoLLegada() << endl;
+        cout << "       Tiempo finalizacion: " << pro.getTiempoFinalizacion() << endl;
+        cout << "       Tiempo retorno: " << pro.getTiempoFinalizacion()-pro.getTiempoLLegada() << endl;
+        cout << "       Tiempo respuesta: " << pro.getTiempoRespuesta()-pro.getTiempoLLegada() << endl;
+        cout << "       Tiempo espera: " << (pro.getTiempoFinalizacion()-pro.getTiempoLLegada())-(pro.getTiempo()-pro.getTiempoRes()) << endl;
+        cout << "       Tiempo servicio: " << pro.getTiempo()-pro.getTiempoRes() << endl << endl;
+    }
+}

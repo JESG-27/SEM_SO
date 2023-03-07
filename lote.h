@@ -17,9 +17,13 @@ public:
     void print();
     Proceso front();
     void pop_front();
+
     void print_listos();
     void print_ejecucion();
     void print_bloqueados();
+
+    void BCP_nuevos();
+    void BCP_listos_ejecucion_bloqueados(int cont);
 
     friend Lote& operator<<(Lote &l, const Proceso &p)
     {

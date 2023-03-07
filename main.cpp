@@ -65,7 +65,7 @@ int main(){
             }
         }
 
-        if (listos.size() != 0)
+        if (listos.size() != 0 && ejecucion.size() == 0)
         {
             Proceso proceso_actual = listos.front();
             listos.pop_front();
@@ -168,6 +168,7 @@ int main(){
                         Proceso proceso_actual = ejecucion.front();
                         ejecucion.pop_front();
                         proceso_actual.setTiempoBlo(5);
+                        proceso_actual.setEstado("bloqueado");
                         bloqueados.agregarProceso(proceso_actual);
                         system("cls");
                         break;    
@@ -202,11 +203,33 @@ int main(){
                     }
                 }
 
+                else if (ch == 'n')
+                {
+                    cout << endl << endl << "Proceso nuevo" << endl;
+                    Proceso proceso_nuevo = capturarProceso(nuevos, ids);
+                    nuevos.agregarProceso(proceso_nuevo);
+                    num_pro++;
+                    system("cls");
+                    break;
+                }
+
+                else if (ch == 't')
+                {
+                    while (true)
+                    {
+                        BCP(nuevos, listos, ejecucion, bloqueados, terminados, cont);
+                        ch = getch();
+                        ch = tolower(ch);
+                        if (ch == 'c')
+                        {
+                            break;
+                        }
+                    }
+                }
+
             }
-            
             system("cls");
         }
-   
     }
 
     cout << endl << "Terminados: " << endl;
