@@ -12,7 +12,7 @@ using namespace std;
 
 int main(){
 
-    int num_pro = 0, tiempo_res, global = 0, memoria = 0;        // Número de procesos
+    int num_pro = 0, tiempo_res, global = 0, memoria = 0, quantum;        // Número de procesos
     size_t i=0, cont=0;
     list<int> ids;
     char ch;
@@ -32,6 +32,8 @@ int main(){
             system("pause");
         }
         system("cls");
+        cout << "Quantum: ";
+        cin >> quantum; cin.ignore();
     }
     while (num_pro < 0);
 
@@ -43,6 +45,7 @@ int main(){
         i++;
         system("cls");
     }
+
 
     // Ejecucción de los procesos
     while (terminados.size() != num_pro)
