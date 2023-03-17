@@ -168,7 +168,7 @@ void ejecutar_proceso(Proceso &p, int cont)
     p.setTiempoFinalizacion(cont);
 }
 
-void tiempoBloqueo (Lote &bloqueados, Lote &listos, int tiempo)
+void tiempoBloqueo (Lote &bloqueados, Lote &listos, int tiempo, int quantum)
 {
     Proceso proceso_actual = bloqueados.front();
     int inicial = proceso_actual.getId();
@@ -189,7 +189,7 @@ void tiempoBloqueo (Lote &bloqueados, Lote &listos, int tiempo)
     if (proceso_actual.getTiempoBlo() == 0)
     {
         bloqueados.pop_front();
-        listos.agregarProcesoListos(proceso_actual, tiempo);
+        listos.agregarProcesoListos(proceso_actual, tiempo, quantum);
     }
 }
 
@@ -227,8 +227,8 @@ void BCP(Lote &nuevos, Lote &listos, Lote &ejecucion, Lote &bloqueados, list<Pro
     for (auto it = terminados.begin(); it != terminados.end(); it++)
     {
         Proceso pro = *it;
-        cout << "   ID: " << pro.getId();
-        cout << "   Operacion: " << pro.getOperando_1() << pro.getOperacion() << pro.getOperando_2();
+        cout << "   ID: " << pro.getId() << endl;
+        cout << "       Operacion: " << pro.getOperando_1() << pro.getOperacion() << pro.getOperando_2();
         
         if (pro.getEstado() == "error")
         {

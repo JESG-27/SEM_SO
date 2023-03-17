@@ -61,7 +61,7 @@ int main(){
                 {
                     Proceso p = nuevos.front();
                     nuevos.pop_front();
-                    listos.agregarProcesoListos(p, cont);
+                    listos.agregarProcesoListos(p, cont, quantum);
                     faltantes--; 
                     memoria = listos.size() + ejecucion.size() + bloqueados.size();
                 }
@@ -80,11 +80,12 @@ int main(){
             // Actualización de bloqueados
             if (bloqueados.size() != 0)
             {
-                tiempoBloqueo(bloqueados, listos, cont);
+                tiempoBloqueo(bloqueados, listos, cont, quantum);
             }
             
             cout << "Tiempo total: " << cont << endl;
             cout << "Nuevos: " << nuevos.size() << endl;
+            cout << "Quantum: " << quantum << endl;
 
             cout << endl << "Listos: " << endl;
             if (listos.size() != 0 || ejecucion.size() != 0)
@@ -102,9 +103,10 @@ int main(){
                 cout << endl << "Ejecucion" << endl;
                 ejecucion.print_ejecucion();
 
-                if (proceso_actual.getTiempoRes() != 0)
+                if (proceso_actual.getTiempoRes() != 0 && proceso_actual.getQuantum() != 0)
                 {
                     proceso_actual.setTiempoRes(proceso_actual.getTiempoRes()-1);
+                    proceso_actual.setQuantum(proceso_actual.getQuantum()-1);
                     ejecucion.pop_front();
                     ejecucion.agregarProcesoEjecucion(proceso_actual, cont);
                 }
@@ -117,6 +119,14 @@ int main(){
                     system("cls");
                     break;
                 }
+
+                else if (proceso_actual.getQuantum() == 0)
+                {
+                    ejecucion.pop_front();
+                    listos.agregarProcesoListos(proceso_actual, cont, quantum);
+                    system("cls");
+                    break;
+                }
             }
             
 
@@ -124,7 +134,6 @@ int main(){
             cout << endl << "Bloqueados: " << endl;
             if (bloqueados.size() != 0)
             {
-                //tiempoBloqueo(bloqueados, listos, cont);
                 bloqueados.print_bloqueados();
             }
 
@@ -170,7 +179,7 @@ int main(){
                     {
                         Proceso proceso_actual = ejecucion.front();
                         ejecucion.pop_front();
-                        proceso_actual.setTiempoBlo(5);
+                        proceso_actual.setTiempoBlo(8);
                         proceso_actual.setEstado("bloqueado");
                         bloqueados.agregarProceso(proceso_actual);
                         system("cls");
@@ -239,8 +248,8 @@ int main(){
     for (auto it = terminados.begin(); it != terminados.end(); it++)
     {
         Proceso pro = *it;
-        cout << "   ID: " << pro.getId();
-        cout << "   Operacion: " << pro.getOperando_1() << pro.getOperacion() << pro.getOperando_2();
+        cout << "   ID: " << pro.getId() << endl;
+        cout << "       Operacion: " << pro.getOperando_1() << pro.getOperacion() << pro.getOperando_2();
         
         if (pro.getEstado() == "error")
         {
@@ -260,5 +269,6 @@ int main(){
         cout << "       Tiempo servicio: " << pro.getTiempo()-pro.getTiempoRes() << endl << endl;
     }
 
+    system("pause");
     return 0;
 }
