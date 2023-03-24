@@ -11,15 +11,20 @@ class Proceso{
     float operando_1;
     string operacion;
     float operando_2;
-    int tiempo;
-    int tiempo_res;
+
+    int tiempo;                     // Tiempo estimado
+    int tiempo_res;                 // Tiempo restante
+    int tiempo_blo;                 // Tiempo bloqueado
+    int tiempo_llegada;             // Tiempo llegada
+    int tiempo_respuesta;           // Tiempo respuesta
+    int tiempo_finalizacion;        // Tiempo finalización
+    
     float resultado;
-    int num_lote;
     string estado;
 
 public:
     Proceso();
-    Proceso(int id, float operando_1, const string &operacion, float operando_2, int tiempo, int numero_lote,const string &estado);
+    Proceso(int id, float operando_1, const string &operacion, float operando_2, int tiempo, const string &estado);
     
     void setId(int dato);
     int getId();
@@ -40,17 +45,27 @@ public:
     void setTiempoRes(int dato);
     int getTiempoRes();
 
+    void setTiempoBlo(int dato);
+    int getTiempoBlo();
+
+    void setTiempoLLegada(int dato);
+    int getTiempoLLegada();
+
+    void setTiempoRespuesta(int dato);
+    int getTiempoRespuesta();
+
+    void setTiempoFinalizacion(int dato);
+    int getTiempoFinalizacion();
+
     void setResultado(float dato);
     float getResultado();
 
     void setEstado(const string &dato);
     string getEstado();
 
-    void setNum_lote(int dato);
-    int getNum_lote();
-
     void print_ejecucion();
     void print_terminado();
+
 };
 
 #endif
