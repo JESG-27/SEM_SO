@@ -43,11 +43,9 @@ bool operacionValida (float operando_1, string operador, float operando_2)
 Proceso capturarProceso (Lote &lote, list<int> &ids)
 {
     srand(time(NULL));
-    int id;
+    int id, tiempo, tamanio;
     string operacion,estado;
-    float operando_1;
-    float operando_2;
-    int tiempo;
+    float operando_1, operando_2;
     bool id_existe, operacion_valida;
 
     // ID
@@ -126,9 +124,19 @@ Proceso capturarProceso (Lote &lote, list<int> &ids)
         }
     } while (tiempo <= 0);
 
+    // Tamaño
+    srand(time(NULL));
+    tamanio = rand()%26;
+    if (tamanio <= 21)
+    { 
+        tamanio = tamanio+6;
+    }
+    cout << "Tamanio: " << tamanio << endl;
+
+
     Sleep(1000);
 
-    Proceso p = Proceso (id, operando_1, operacion, operando_2, tiempo, "nuevo");
+    Proceso p = Proceso (id, operando_1, operacion, operando_2, tiempo, "nuevo", tamanio);
     return p;
 }
 

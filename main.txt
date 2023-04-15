@@ -7,19 +7,17 @@
 #include "proceso.h"
 #include "lote.h"
 #include "funciones.h"
-#include "memoria.h"
 
 using namespace std;
 
 int main(){
 
-    int num_pro = 0, tiempo_res, global = 0, marcos_dis;        // Número de procesos
+    int num_pro = 0, tiempo_res, global = 0, memoria = 0;        // Número de procesos
     size_t i=0, cont=0;
     list<int> ids;
     char ch;
 
     // Lotes de estados
-    Memoria memoria = Memoria();
     Lote nuevos, listos, bloqueados, ejecucion;
     list<Proceso> terminados;
 
@@ -49,31 +47,20 @@ int main(){
     // Ejecucción de los procesos
     while (terminados.size() != num_pro)
     {
-        marcos_dis = 40 - memoria.size();
+        memoria = listos.size() + ejecucion.size() + bloqueados.size();
 
-        if (marcos_dis != 0)
+        if (memoria < 4)
         {
-            if (nuevos.size() != 0)
+            if (nuevos.size() > 0)
             {
-                while (marcos_dis != 0 && nuevos.size() != 0)
+                int faltantes = 4 - memoria;
+                while (nuevos.size() > 0 && faltantes > 0)
                 {
                     Proceso p = nuevos.front();
-                    int marcos = p.getTamanio()/5;
-                    if (p.getTamanio()%5 != 0)
-                        marcos++;
-
-                    if (marcos <= marcos_dis)
-                    {
-                        nuevos.pop_front();
-                        memoria.cargarMemoria(p);
-                        listos.agregarProcesoListos(p, cont);
-                        marcos_dis = 40 - memoria.size();
-                    }
-
-                    else
-                    {
-                        break;
-                    }
+                    nuevos.pop_front();
+                    listos.agregarProcesoListos(p, cont);
+                    faltantes--; 
+                    memoria = listos.size() + ejecucion.size() + bloqueados.size();
                 }
             }
         }
@@ -95,7 +82,6 @@ int main(){
             
             cout << "Tiempo total: " << cont << endl;
             cout << "Nuevos: " << nuevos.size() << endl;
-            cout << "Memoria: " << memoria.size() << endl;
 
             cout << endl << "Listos: " << endl;
             if (listos.size() != 0 || ejecucion.size() != 0)

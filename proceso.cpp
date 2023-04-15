@@ -5,7 +5,7 @@ Proceso::Proceso()
 
 }
 
-Proceso::Proceso(int id, float operando_1, const string &operacion, float operando_2, int tiempo, const string &estado)
+Proceso::Proceso(int id, float operando_1, const string &operacion, float operando_2, int tiempo, const string &estado, int tamanio)
 {
     this->id = id;
     this->operando_1 = operando_1;
@@ -17,6 +17,7 @@ Proceso::Proceso(int id, float operando_1, const string &operacion, float operan
     this->tiempo_llegada = -1;
     this->tiempo_respuesta = -1;
     this->estado = estado;
+    this->tamanio = tamanio;
 }
 
 void Proceso::setId(int dato)
@@ -137,6 +138,16 @@ void Proceso::setEstado(const string &dato)//Agregue el estado del proceos
 string Proceso::getEstado()
 {
     return estado;
+}
+
+void Proceso::setTamanio(int dato)
+{
+    tamanio = dato;
+}
+
+int Proceso::getTamanio()
+{
+    return tamanio;
 }
 
 void Proceso::print_ejecucion()
