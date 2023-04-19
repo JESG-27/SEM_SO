@@ -11,7 +11,7 @@ class Lote{
 public:
     Lote();
     void agregarProceso(const Proceso &p);
-    void agregarProcesoListos(const Proceso &p, int llegada);
+    void agregarProcesoListos(const Proceso &p, int llegada, int qt);
     void agregarProcesoEjecucion(const Proceso &p, int llegada);
     int size();
     void print();

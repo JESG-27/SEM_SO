@@ -18,6 +18,8 @@ class Proceso{
     int tiempo_llegada;             // Tiempo llegada
     int tiempo_respuesta;           // Tiempo respuesta
     int tiempo_finalizacion;        // Tiempo finalización
+
+    int quantum;
     
     float resultado;
     string estado;
@@ -57,6 +59,9 @@ public:
 
     void setTiempoFinalizacion(int dato);
     int getTiempoFinalizacion();
+
+    void setQuantum(int dato);
+    int getQuantum();
 
     void setResultado(float dato);
     float getResultado();

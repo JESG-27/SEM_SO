@@ -16,6 +16,7 @@ Proceso::Proceso(int id, float operando_1, const string &operacion, float operan
     this->tiempo_blo = 0;
     this->tiempo_llegada = -1;
     this->tiempo_respuesta = -1;
+    this->quantum = 0;
     this->estado = estado;
     this->tamanio = tamanio;
 }
@@ -118,6 +119,16 @@ void Proceso::setTiempoFinalizacion(int dato)
 int Proceso::getTiempoFinalizacion()
 {
     return tiempo_finalizacion;
+}
+
+void Proceso::setQuantum(int dato)
+{
+    quantum = dato;
+}
+
+int Proceso::getQuantum()
+{
+    return quantum;
 }
 
 void Proceso::setResultado(float dato)

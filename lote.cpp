@@ -11,7 +11,7 @@ void Lote::agregarProceso(const Proceso &p)
     cont++;
 }
 
-void Lote::agregarProcesoListos(const Proceso &p, int llegada)
+void Lote::agregarProcesoListos(const Proceso &p, int llegada, int qt)
 {
     Proceso proceso = p;
     if (proceso.getTiempoLLegada() == -1)
@@ -19,6 +19,7 @@ void Lote::agregarProcesoListos(const Proceso &p, int llegada)
         proceso.setTiempoLLegada(llegada);    
     }
     proceso.setEstado("listo");
+    proceso.setQuantum(qt);
     lista_procesos.push_back(proceso);
     cont++;
 }
@@ -82,7 +83,8 @@ void Lote::print_ejecucion()
         cout << "   Operacion: " << pro.getOperando_1() << pro.getOperacion() << pro.getOperando_2();
         cout << "   Tiempo estimado: " << pro.getTiempo();
         cout << "   Tiempo transcurrido: " << pro.getTiempo()-pro.getTiempoRes();
-        cout << "   Tiempo restante: " << pro.getTiempoRes() << endl;
+        cout << "   Tiempo restante: " << pro.getTiempoRes();
+        cout << "   Tiempo restante (quantum): " << pro.getQuantum() << endl;
     }
 }
 
@@ -126,6 +128,10 @@ void Lote::BCP_listos_ejecucion_bloqueados(int cont)
         if (pro.getEstado() == "bloqueado")
         {
             cout << "       Tiempo bloqueado (restante): " << pro.getTiempoBlo() << endl;
+        }
+        if (pro.getEstado() == "ejecucion")
+        {
+            cout << "       Tiempo restante (quantum): " << pro.getQuantum()  << endl;
         }
         cout << endl;
     }
