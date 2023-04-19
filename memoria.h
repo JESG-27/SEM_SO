@@ -5,11 +5,13 @@
 #include "marco.h"
 #include "proceso.h"
 
+#define SIZE 40
+
 using namespace std;
 
 class Memoria
 {
-    Marco arreglo[40];
+    Marco arreglo[SIZE];
     int cont;
 
 public:
@@ -18,12 +20,12 @@ public:
     {
         cont = 0;
         size_t i = 0;
-        while(i != 40)
+        while(i != SIZE)
         {
             Marco a = Marco();
             arreglo[i] = a;
             
-            if (i == 38 || i == 39)
+            if (i == SIZE-2 || i == SIZE-1)
             {
                 arreglo[i].setID(-1);
                 arreglo[i].setBloques(5);
@@ -39,7 +41,7 @@ public:
         return cont;
     }
 
-    void cargarMemoria(Proceso &p)
+    void agregar(Proceso &p)
     {
         bool fragmentacion = false;
         int marcos = p.getTamanio()/5;
@@ -51,7 +53,7 @@ public:
             fragmentacion = true;
         }
         
-        for (size_t i=0; i<40; i++)
+        for (size_t i=0; i<SIZE; i++)
         {
             if (arreglo[i].getID() == 0)
             {
@@ -89,6 +91,64 @@ public:
                 }
             }
         }
+    }
+
+
+    void eliminar(Proceso &p)
+    {
+        int id_eliminar = p.getId();
+        for (size_t i=0; i<SIZE; i++)
+        {
+            if (arreglo[i].getID() == id_eliminar)
+            {
+                arreglo[i].setID(0);
+                arreglo[i].setBloques(0);
+                cont--;
+            }
+        }
+    }
+
+    void imprimir()
+    {
+        for (size_t i=0; i<SIZE; i++)
+        {
+            if (i < 10)
+            {
+                if (arreglo[i].getID() == 0)
+                {
+                    cout << "   Marco:  " << i << "    ID: Libre" << "    Bloques en uso: " << arreglo[i].getBloques() << "/5" << endl;
+                }
+                else
+                {
+                    if (arreglo[i].getID() < 10)
+                        cout << "   Marco:  " << i << "    ID:     " << arreglo[i].getID() << "    Bloques en uso: " << arreglo[i].getBloques() << "/5" << endl;
+                    else
+                        cout << "   Marco:  " << i << "    ID:   " << arreglo[i].getID() << "     Bloques en uso: " << arreglo[i].getBloques() << "/5" << endl;
+                }
+            }
+
+            else
+            {
+                if (arreglo[i].getID() == 0)
+                {
+                    cout << "   Marco:  " << i << "   ID: Libre" << "    Bloques en uso: " << arreglo[i].getBloques() << "/5" << endl;
+                }
+
+                else if (arreglo[i].getID() == -1)
+                {
+                    cout << "   Marco:  " << i << "   ID: SO   " << "    Bloques en uso: " << arreglo[i].getBloques() << "/5" << endl;
+                }
+
+                else
+                {
+                    if (arreglo[i].getID() < 10)
+                        cout << "   Marco:  " << i << "   ID:     " << arreglo[i].getID() << "    Bloques en uso: " << arreglo[i].getBloques() << "/5" << endl;
+                    else
+                        cout << "   Marco:  " << i << "   ID:   " << arreglo[i].getID() << "     Bloques en uso: " << arreglo[i].getBloques() << "/5" << endl;
+                }
+            }
+        }
+        cout << endl;
     }
 };
 

@@ -13,7 +13,7 @@ using namespace std;
 
 int main(){
 
-    int num_pro = 0, tiempo_res, global = 0, memoria = 0, quantum;        // Número de procesos
+    int num_pro = 0, tiempo_res, global = 0, quantum, marcos_dis;        // Número de procesos
     size_t i=0, cont=0;
     list<int> ids;
     char ch;
@@ -61,10 +61,22 @@ int main(){
                 while (marcos_dis != 0 && nuevos.size() != 0)
                 {
                     Proceso p = nuevos.front();
-                    nuevos.pop_front();
-                    listos.agregarProcesoListos(p, cont, quantum);
-                    faltantes--; 
-                    memoria = listos.size() + ejecucion.size() + bloqueados.size();
+                    int marcos = p.getTamanio()/5;
+                    if (p.getTamanio()%5 != 0)
+                        marcos++;
+
+                    if (marcos <= marcos_dis)
+                    {
+                        nuevos.pop_front();
+                        memoria.agregar(p);
+                        listos.agregarProcesoListos(p, cont, quantum);
+                        marcos_dis = 40 - memoria.size();
+                    }
+
+                    else
+                    {
+                        break;
+                    }
                 }
             }
         }
@@ -87,6 +99,7 @@ int main(){
             cout << "Tiempo total: " << cont << endl;
             cout << "Nuevos: " << nuevos.size() << endl;
             cout << "Quantum: " << quantum << endl;
+            cout << "Marcos memoria: " << memoria.size() << endl;
 
             cout << endl << "Listos: " << endl;
             if (listos.size() != 0 || ejecucion.size() != 0)
@@ -99,7 +112,8 @@ int main(){
                 }
                 
                 Proceso proceso_actual = ejecucion.front();
-                listos.print_listos();
+                memoria.imprimir();
+                //listos.print_listos();
 
                 cout << endl << "Ejecucion" << endl;
                 ejecucion.print_ejecucion();
@@ -116,6 +130,7 @@ int main(){
                 {
                     ejecucion.pop_front();
                     ejecutar_proceso(proceso_actual, cont);
+                    memoria.eliminar(proceso_actual);
                     terminados.push_back(proceso_actual);
                     system("cls");
                     break;
@@ -197,6 +212,7 @@ int main(){
                         proceso_actual.setEstado("error");
                         proceso_actual.setTiempoFinalizacion(cont); 
                         ejecucion.pop_front();
+                        memoria.eliminar(proceso_actual);
                         terminados.push_back(proceso_actual);
                         system("cls");
                         break;
@@ -231,6 +247,21 @@ int main(){
                     while (true)
                     {
                         BCP(nuevos, listos, ejecucion, bloqueados, terminados, cont);
+                        ch = getch();
+                        ch = tolower(ch);
+                        if (ch == 'c')
+                        {
+                            break;
+                        }
+                    }
+                }
+
+                else if (ch == 'a')
+                {
+                    system("cls");
+                    while (true)
+                    {
+                        memoria.imprimir();
                         ch = getch();
                         ch = tolower(ch);
                         if (ch == 'c')
