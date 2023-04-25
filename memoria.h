@@ -60,6 +60,7 @@ public:
                 if (marcos != 0)
                 {
                     arreglo[i].setID(p.getId());
+                    arreglo[i].setEstado(p.getEstado());
                     
                     if (fragmentacion == false)
                     {
@@ -103,6 +104,7 @@ public:
             {
                 arreglo[i].setID(0);
                 arreglo[i].setBloques(0);
+                arreglo[i].setEstado("Libre");
                 cont--;
             }
         }
@@ -121,9 +123,9 @@ public:
                 else
                 {
                     if (arreglo[i].getID() < 10)
-                        cout << "   Marco:  " << i << "    ID:     " << arreglo[i].getID() << "    Bloques en uso: " << arreglo[i].getBloques() << "/5" << endl;
+                        cout << "   Marco:  " << i << "    ID:     " << arreglo[i].getID() << "    Bloques en uso: " << arreglo[i].getBloques() << "/5" << "    Estado: " << arreglo[i].getEstado() << endl;
                     else
-                        cout << "   Marco:  " << i << "    ID:   " << arreglo[i].getID() << "     Bloques en uso: " << arreglo[i].getBloques() << "/5" << endl;
+                        cout << "   Marco:  " << i << "    ID:   " << arreglo[i].getID() << "     Bloques en uso: " << arreglo[i].getBloques() << "/5" << "    Estado: " << arreglo[i].getEstado() << endl;
                 }
             }
 
@@ -142,13 +144,25 @@ public:
                 else
                 {
                     if (arreglo[i].getID() < 10)
-                        cout << "   Marco:  " << i << "   ID:     " << arreglo[i].getID() << "    Bloques en uso: " << arreglo[i].getBloques() << "/5" << endl;
+                        cout << "   Marco:  " << i << "   ID:     " << arreglo[i].getID() << "    Bloques en uso: " << arreglo[i].getBloques() << "/5" << "    Estado: " << arreglo[i].getEstado() << endl;
                     else
-                        cout << "   Marco:  " << i << "   ID:   " << arreglo[i].getID() << "     Bloques en uso: " << arreglo[i].getBloques() << "/5" << endl;
+                        cout << "   Marco:  " << i << "   ID:   " << arreglo[i].getID() << "     Bloques en uso: " << arreglo[i].getBloques() << "/5" << "    Estado: " << arreglo[i].getEstado() << endl;
                 }
             }
         }
         cout << endl;
+    }
+
+    void actualizar(Proceso &p)
+    {
+        int id_actualizar = p.getId();
+        for (size_t i=0; i<SIZE; i++)
+        {
+            if (arreglo[i].getID() == id_actualizar)
+            {
+                arreglo[i].setEstado(p.getEstado());
+            }
+        }
     }
 };
 

@@ -69,7 +69,7 @@ int main(){
                     {
                         nuevos.pop_front();
                         memoria.agregar(p);
-                        listos.agregarProcesoListos(p, cont, quantum);
+                        listos.agregarProcesoListos(p, cont, quantum, memoria);
                         marcos_dis = 40 - memoria.size();
                     }
 
@@ -85,7 +85,7 @@ int main(){
         {
             Proceso proceso_actual = listos.front();
             listos.pop_front();
-            ejecucion.agregarProcesoEjecucion(proceso_actual, cont);
+            ejecucion.agregarProcesoEjecucion(proceso_actual, cont, memoria);
         }
 
         while (true)
@@ -93,7 +93,7 @@ int main(){
             // Actualización de bloqueados
             if (bloqueados.size() != 0)
             {
-                tiempoBloqueo(bloqueados, listos, cont, quantum);
+                tiempoBloqueo(bloqueados, listos, cont, quantum, memoria);
             }
             
             cout << "Tiempo total: " << cont << endl;
@@ -105,18 +105,18 @@ int main(){
             cout << "Quantum: " << quantum << endl;
             cout << "Marcos memoria: " << memoria.size() << endl;
 
-            cout << endl << "Listos: " << endl;
+            cout << endl << "Memoria: " << endl;
+            memoria.imprimir();
             if (listos.size() != 0 || ejecucion.size() != 0)
             {
                 if (ejecucion.size() == 0)
                 {
                     Proceso proceso_actual = listos.front();
                     listos.pop_front();
-                    ejecucion.agregarProcesoEjecucion(proceso_actual, cont);
+                    ejecucion.agregarProcesoEjecucion(proceso_actual, cont, memoria);
                 }
                 
                 Proceso proceso_actual = ejecucion.front();
-                memoria.imprimir();
                 //listos.print_listos();
 
                 cout << endl << "Ejecucion" << endl;
@@ -127,7 +127,7 @@ int main(){
                     proceso_actual.setTiempoRes(proceso_actual.getTiempoRes()-1);
                     proceso_actual.setQuantum(proceso_actual.getQuantum()-1);
                     ejecucion.pop_front();
-                    ejecucion.agregarProcesoEjecucion(proceso_actual, cont);
+                    ejecucion.agregarProcesoEjecucion(proceso_actual, cont, memoria);
                 }
 
                 else if (proceso_actual.getTiempoRes() == 0)
@@ -143,7 +143,7 @@ int main(){
                 else if (proceso_actual.getQuantum() == 0)
                 {
                     ejecucion.pop_front();
-                    listos.agregarProcesoListos(proceso_actual, cont, quantum);
+                    listos.agregarProcesoListos(proceso_actual, cont, quantum, memoria);
                     system("cls");
                     break;
                 }
@@ -202,6 +202,7 @@ int main(){
                         proceso_actual.setTiempoBlo(8);
                         proceso_actual.setEstado("bloqueado");
                         bloqueados.agregarProceso(proceso_actual);
+                        memoria.actualizar(proceso_actual);
                         system("cls");
                         break;    
                     }

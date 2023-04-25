@@ -11,7 +11,7 @@ void Lote::agregarProceso(const Proceso &p)
     cont++;
 }
 
-void Lote::agregarProcesoListos(const Proceso &p, int llegada, int qt)
+void Lote::agregarProcesoListos(const Proceso &p, int llegada, int qt, Memoria &m)
 {
     Proceso proceso = p;
     if (proceso.getTiempoLLegada() == -1)
@@ -21,10 +21,11 @@ void Lote::agregarProcesoListos(const Proceso &p, int llegada, int qt)
     proceso.setEstado("listo");
     proceso.setQuantum(qt);
     lista_procesos.push_back(proceso);
+    m.actualizar(proceso);
     cont++;
 }
 
-void Lote::agregarProcesoEjecucion(const Proceso &p, int llegada)
+void Lote::agregarProcesoEjecucion(const Proceso &p, int llegada, Memoria &m)
 {
     Proceso proceso = p;
     if (proceso.getTiempoRespuesta() == -1)
@@ -33,6 +34,7 @@ void Lote::agregarProcesoEjecucion(const Proceso &p, int llegada)
     }
     proceso.setEstado("ejecucion");
     lista_procesos.push_back(proceso);
+    m.actualizar(proceso);
     cont++;
 }
 

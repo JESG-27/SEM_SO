@@ -2,6 +2,7 @@
 #define LOTE_H
 
 #include "proceso.h"
+#include "memoria.h"
 
 using namespace std;
 
@@ -11,8 +12,8 @@ class Lote{
 public:
     Lote();
     void agregarProceso(const Proceso &p);
-    void agregarProcesoListos(const Proceso &p, int llegada, int qt);
-    void agregarProcesoEjecucion(const Proceso &p, int llegada);
+    void agregarProcesoListos(const Proceso &p, int llegada, int qt, Memoria &m);
+    void agregarProcesoEjecucion(const Proceso &p, int llegada, Memoria &m);
     int size();
     void print();
     Proceso front();

@@ -176,7 +176,7 @@ void ejecutar_proceso(Proceso &p, int cont)
     p.setTiempoFinalizacion(cont);
 }
 
-void tiempoBloqueo (Lote &bloqueados, Lote &listos, int tiempo, int quantum)
+void tiempoBloqueo (Lote &bloqueados, Lote &listos, int tiempo, int quantum, Memoria &m)
 {
     Proceso proceso_actual = bloqueados.front();
     int inicial = proceso_actual.getId();
@@ -197,7 +197,7 @@ void tiempoBloqueo (Lote &bloqueados, Lote &listos, int tiempo, int quantum)
     if (proceso_actual.getTiempoBlo() == 0)
     {
         bloqueados.pop_front();
-        listos.agregarProcesoListos(proceso_actual, tiempo, quantum);
+        listos.agregarProcesoListos(proceso_actual, tiempo, quantum, m);
     }
 }
 
