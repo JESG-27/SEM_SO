@@ -98,6 +98,10 @@ int main(){
             
             cout << "Tiempo total: " << cont << endl;
             cout << "Nuevos: " << nuevos.size() << endl;
+            
+            if (nuevos.size() > 0)
+                cout << "   Nuevo: " << nuevos.front().getId() << " Tamanio: " << nuevos.front().getTamanio()<< endl;
+            
             cout << "Quantum: " << quantum << endl;
             cout << "Marcos memoria: " << memoria.size() << endl;
 

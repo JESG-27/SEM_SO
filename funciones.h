@@ -134,7 +134,7 @@ Proceso capturarProceso (Lote &lote, list<int> &ids)
     cout << "Tamanio: " << tamanio << endl;
 
 
-    Sleep(1000);
+    //Sleep(1000);
 
     Proceso p = Proceso (id, operando_1, operacion, operando_2, tiempo, "nuevo", tamanio);
     return p;
