@@ -18,13 +18,16 @@ class Proceso{
     int tiempo_llegada;             // Tiempo llegada
     int tiempo_respuesta;           // Tiempo respuesta
     int tiempo_finalizacion;        // Tiempo finalización
+
+    int quantum;
     
     float resultado;
     string estado;
+    int tamanio;
 
 public:
     Proceso();
-    Proceso(int id, float operando_1, const string &operacion, float operando_2, int tiempo, const string &estado);
+    Proceso(int id, float operando_1, const string &operacion, float operando_2, int tiempo, const string &estado, int tamanio);
     
     void setId(int dato);
     int getId();
@@ -57,11 +60,17 @@ public:
     void setTiempoFinalizacion(int dato);
     int getTiempoFinalizacion();
 
+    void setQuantum(int dato);
+    int getQuantum();
+
     void setResultado(float dato);
     float getResultado();
 
     void setEstado(const string &dato);
     string getEstado();
+
+    void setTamanio(int dato);
+    int getTamanio();
 
     void print_ejecucion();
     void print_terminado();

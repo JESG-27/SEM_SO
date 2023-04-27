@@ -43,11 +43,9 @@ bool operacionValida (float operando_1, string operador, float operando_2)
 Proceso capturarProceso (Lote &lote, list<int> &ids)
 {
     srand(time(NULL));
-    int id;
+    int id, tiempo, tamanio;
     string operacion,estado;
-    float operando_1;
-    float operando_2;
-    int tiempo;
+    float operando_1, operando_2;
     bool id_existe, operacion_valida;
 
     // ID
@@ -126,9 +124,19 @@ Proceso capturarProceso (Lote &lote, list<int> &ids)
         }
     } while (tiempo <= 0);
 
-    Sleep(1000);
+    // Tamaño
+    srand(time(NULL));
+    tamanio = rand()%26;
+    if (tamanio <= 21)
+    { 
+        tamanio = tamanio+6;
+    }
+    cout << "Tamanio: " << tamanio << endl;
 
-    Proceso p = Proceso (id, operando_1, operacion, operando_2, tiempo, "nuevo");
+
+    //Sleep(1000);
+
+    Proceso p = Proceso (id, operando_1, operacion, operando_2, tiempo, "nuevo", tamanio);
     return p;
 }
 
@@ -168,7 +176,7 @@ void ejecutar_proceso(Proceso &p, int cont)
     p.setTiempoFinalizacion(cont);
 }
 
-void tiempoBloqueo (Lote &bloqueados, Lote &listos, int tiempo)
+void tiempoBloqueo (Lote &bloqueados, Lote &listos, int tiempo, int quantum, Memoria &m)
 {
     Proceso proceso_actual = bloqueados.front();
     int inicial = proceso_actual.getId();
@@ -189,7 +197,7 @@ void tiempoBloqueo (Lote &bloqueados, Lote &listos, int tiempo)
     if (proceso_actual.getTiempoBlo() == 0)
     {
         bloqueados.pop_front();
-        listos.agregarProcesoListos(proceso_actual, tiempo);
+        listos.agregarProcesoListos(proceso_actual, tiempo, quantum, m);
     }
 }
 
@@ -227,8 +235,8 @@ void BCP(Lote &nuevos, Lote &listos, Lote &ejecucion, Lote &bloqueados, list<Pro
     for (auto it = terminados.begin(); it != terminados.end(); it++)
     {
         Proceso pro = *it;
-        cout << "   ID: " << pro.getId();
-        cout << "   Operacion: " << pro.getOperando_1() << pro.getOperacion() << pro.getOperando_2();
+        cout << "   ID: " << pro.getId() << endl;
+        cout << "       Operacion: " << pro.getOperando_1() << pro.getOperacion() << pro.getOperando_2();
         
         if (pro.getEstado() == "error")
         {
