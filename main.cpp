@@ -89,7 +89,7 @@ int main(){
         }
 
         while (true)
-        {               
+        {
             // Actualización de bloqueados
             if (bloqueados.size() != 0)
             {
@@ -101,6 +101,7 @@ int main(){
             
             if (nuevos.size() > 0)
                 cout << "   Nuevo: " << nuevos.front().getId() << " Tamanio: " << nuevos.front().getTamanio()<< endl;
+            
             
             cout << "Quantum: " << quantum << endl;
             cout << "Marcos memoria: " << memoria.size() << endl;
@@ -266,6 +267,7 @@ int main(){
                     system("cls");
                     while (true)
                     {
+                        cout << "---    Memoria     ---" << endl;
                         memoria.imprimir();
                         ch = getch();
                         ch = tolower(ch);
