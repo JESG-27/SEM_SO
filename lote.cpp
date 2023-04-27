@@ -1,4 +1,5 @@
 #include "lote.h"
+#include <fstream>
 
 Lote::Lote()
 {
@@ -136,5 +137,31 @@ void Lote::BCP_listos_ejecucion_bloqueados(int cont)
             cout << "       Tiempo restante (quantum): " << pro.getQuantum()  << endl;
         }
         cout << endl;
+    }
+}
+
+void Lote::respaldar()
+{
+    ofstream archivo("suspendidos.txt", ios::out);
+
+    if (archivo.is_open())
+    {
+        for (auto it = lista_procesos.begin(); it != lista_procesos.end(); it++)
+        {
+            Proceso pro = *it;
+            archivo << pro.getId() << endl;
+            archivo << pro.getOperando_1() << endl;
+            archivo << pro.getOperacion() << endl;
+            archivo << pro.getOperando_2() << endl;
+            archivo << pro.getTiempo() << endl;
+            archivo << pro.getTamanio() << endl;
+            archivo << "+---+" << endl;
+        }
+    }
+    archivo.close();
+
+    if (lista_procesos.size() == 0)
+    {
+        remove("suspendidos.txt");
     }
 }

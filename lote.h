@@ -26,6 +26,8 @@ public:
     void BCP_nuevos();
     void BCP_listos_ejecucion_bloqueados(int cont);
 
+    void respaldar();
+
     friend Lote& operator<<(Lote &l, const Proceso &p)
     {
         l.agregarProceso(p);

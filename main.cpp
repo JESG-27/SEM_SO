@@ -20,7 +20,7 @@ int main(){
 
     // Lotes de estados
     Memoria memoria = Memoria();
-    Lote nuevos, listos, bloqueados, ejecucion;
+    Lote nuevos, listos, bloqueados, ejecucion, suspendidos;
     list<Proceso> terminados;
 
     // Captura de número de procesos 
@@ -103,6 +103,11 @@ int main(){
                 cout << "   Nuevo: " << nuevos.front().getId() << " Tamanio: " << nuevos.front().getTamanio()<< endl;
             
             
+            cout << "Suspendidos: " << suspendidos.size() << endl;
+
+            if (suspendidos.size() > 0)
+                cout << "   Suspendido: " << suspendidos.front().getId() << " Tamanio: " << suspendidos.front().getTamanio()<< endl;
+
             cout << "Quantum: " << quantum << endl;
             cout << "Marcos memoria: " << memoria.size() << endl;
 
@@ -225,7 +230,7 @@ int main(){
                     }
                 }
 
-                else if (ch == 'p')
+                else if (ch == 'p')                     // Pausa
                 {
                     while (true)
                     {
@@ -238,7 +243,7 @@ int main(){
                     }
                 }
 
-                else if (ch == 'n')
+                else if (ch == 'n')                 // Nuevo
                 {
                     cout << endl << endl << "Proceso nuevo" << endl;
                     Proceso proceso_nuevo = capturarProceso(nuevos, ids);
@@ -248,7 +253,7 @@ int main(){
                     break;
                 }
 
-                else if (ch == 't')
+                else if (ch == 't')                 // Bloque de control de procesos
                 {
                     while (true)
                     {
@@ -262,7 +267,7 @@ int main(){
                     }
                 }
 
-                else if (ch == 'a')
+                else if (ch == 'a')             // Página
                 {
                     system("cls");
                     while (true)
@@ -275,6 +280,39 @@ int main(){
                         {
                             break;
                         }
+                    }
+                }
+
+                else if (ch == 's')                     // Suspendidos
+                {
+                    if (bloqueados.size() > 0)
+                    {
+                        Proceso proceso_actual = bloqueados.front();
+                        memoria.eliminar(proceso_actual);
+                        bloqueados.pop_front();
+                        proceso_actual.setEstado("suspendido");
+                        suspendidos.agregarProceso(proceso_actual);
+                        suspendidos.respaldar();
+                        system("cls");
+                        break; 
+                    }
+                }
+
+                else if (ch == 'r')                 // Recuperar suspendido  
+                                                    // Modificar recuperación a memoria!!!!!!!!!!!!
+                {
+                    if (suspendidos.size() > 0)
+                    {
+                        Proceso proceso_actual = suspendidos.front();
+                        suspendidos.pop_front();
+                        nuevos.agregarProceso(proceso_actual);
+                        suspendidos.respaldar();
+                        system("cls");
+                        cout << "Recuperado" << endl; 
+                        cout << "   ID: " << proceso_actual.getId() << endl; 
+                        cout << "   Tamanio: " << proceso_actual.getTamanio() << endl; 
+                        Sleep(1500);
+                        break; 
                     }
                 }
 
