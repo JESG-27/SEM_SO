@@ -54,29 +54,26 @@ int main(){
     {
         marcos_dis = 40 - memoria.size();
 
-        if (marcos_dis != 0)
+        if (marcos_dis != 0 && nuevos.size() != 0)
         {
-            if (nuevos.size() != 0)
+            while (marcos_dis != 0 && nuevos.size() != 0)
             {
-                while (marcos_dis != 0 && nuevos.size() != 0)
+                Proceso p = nuevos.front();
+                int marcos = p.getTamanio()/5;
+                if (p.getTamanio()%5 != 0)
+                    marcos++;
+
+                if (marcos <= marcos_dis)
                 {
-                    Proceso p = nuevos.front();
-                    int marcos = p.getTamanio()/5;
-                    if (p.getTamanio()%5 != 0)
-                        marcos++;
+                    nuevos.pop_front();
+                    memoria.agregar(p);
+                    listos.agregarProcesoListos(p, cont, quantum, memoria);
+                    marcos_dis = 40 - memoria.size();
+                }
 
-                    if (marcos <= marcos_dis)
-                    {
-                        nuevos.pop_front();
-                        memoria.agregar(p);
-                        listos.agregarProcesoListos(p, cont, quantum, memoria);
-                        marcos_dis = 40 - memoria.size();
-                    }
-
-                    else
-                    {
-                        break;
-                    }
+                else
+                {
+                    break;
                 }
             }
         }
@@ -299,7 +296,6 @@ int main(){
                 }
 
                 else if (ch == 'r')                 // Recuperar suspendido  
-                                                    // Modificar recuperación a memoria!!!!!!!!!!!!
                 {
                     if (suspendidos.size() > 0)
                     {
