@@ -4,6 +4,7 @@
 #include <iostream>
 #include "marco.h"
 #include "proceso.h"
+#include "lote.h"
 
 #define SIZE 40
 
@@ -114,40 +115,22 @@ public:
     {
         for (size_t i=0; i<SIZE; i++)
         {
-            if (i < 10)
+            if (arreglo[i].getID() == 0)
             {
-                if (arreglo[i].getID() == 0)
-                {
-                    cout << "   Marco:  " << i << "    ID: Libre" << "    Bloques en uso: " << arreglo[i].getBloques() << "/5" << endl;
-                }
-                else
-                {
-                    if (arreglo[i].getID() < 10)
-                        cout << "   Marco:  " << i << "    ID:     " << arreglo[i].getID() << "    Bloques en uso: " << arreglo[i].getBloques() << "/5" << "    Estado: " << arreglo[i].getEstado() << endl;
-                    else
-                        cout << "   Marco:  " << i << "    ID:   " << arreglo[i].getID() << "     Bloques en uso: " << arreglo[i].getBloques() << "/5" << "    Estado: " << arreglo[i].getEstado() << endl;
-                }
+                cout << "   Marco:  " << i << "   ID: Libre" << "    Bloques en uso: " << arreglo[i].getBloques() << "/5" << endl;
+            }
+
+            else if (arreglo[i].getID() == -1)
+            {
+                cout << "   Marco:  " << i << "   ID: SO   " << "    Bloques en uso: " << arreglo[i].getBloques() << "/5" << endl;
             }
 
             else
             {
-                if (arreglo[i].getID() == 0)
-                {
-                    cout << "   Marco:  " << i << "   ID: Libre" << "    Bloques en uso: " << arreglo[i].getBloques() << "/5" << endl;
-                }
-
-                else if (arreglo[i].getID() == -1)
-                {
-                    cout << "   Marco:  " << i << "   ID: SO   " << "    Bloques en uso: " << arreglo[i].getBloques() << "/5" << endl;
-                }
-
+                if (arreglo[i].getID() < 10)
+                    cout << "   Marco:  " << i << "   ID:     " << arreglo[i].getID() << "    Bloques en uso: " << arreglo[i].getBloques() << "/5" << "    Estado: " << arreglo[i].getEstado() << endl;
                 else
-                {
-                    if (arreglo[i].getID() < 10)
-                        cout << "   Marco:  " << i << "   ID:     " << arreglo[i].getID() << "    Bloques en uso: " << arreglo[i].getBloques() << "/5" << "    Estado: " << arreglo[i].getEstado() << endl;
-                    else
-                        cout << "   Marco:  " << i << "   ID:   " << arreglo[i].getID() << "     Bloques en uso: " << arreglo[i].getBloques() << "/5" << "    Estado: " << arreglo[i].getEstado() << endl;
-                }
+                    cout << "   Marco:  " << i << "   ID:   " << arreglo[i].getID() << "     Bloques en uso: " << arreglo[i].getBloques() << "/5" << "    Estado: " << arreglo[i].getEstado() << endl;
             }
         }
         cout << endl;

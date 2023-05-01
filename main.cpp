@@ -95,23 +95,8 @@ int main(){
             {
                 tiempoBloqueo(bloqueados, listos, cont, quantum, memoria);
             }
-            
-            cout << "Tiempo total: " << cont << endl;
-            cout << "Nuevos: " << nuevos.size() << endl;
-            
-            if (nuevos.size() > 0)
-                cout << "   Nuevo: " << nuevos.front().getId() << " Tamanio: " << nuevos.front().getTamanio()<< endl;
-            
-            
-            cout << "Suspendidos: " << suspendidos.size() << endl;
 
-            if (suspendidos.size() > 0)
-                cout << "   Suspendido: " << suspendidos.front().getId() << " Tamanio: " << suspendidos.front().getTamanio()<< endl;
-
-            cout << "Quantum: " << quantum << endl;
-            cout << "Marcos memoria: " << memoria.size() << endl;
-
-            cout << endl << "Memoria: " << endl;
+            cout << "Memoria: " << endl;
             memoria.imprimir();
             if (listos.size() != 0 || ejecucion.size() != 0)
             {
@@ -188,6 +173,21 @@ int main(){
                 }
                 cout << endl;
             }
+
+            cout << endl << "Tiempo total: " << cont << endl;
+            cout << "Nuevos: " << nuevos.size() << endl;
+            
+            if (nuevos.size() > 0)
+                cout << "   Nuevo ID: " << nuevos.front().getId() << " Tamanio: " << nuevos.front().getTamanio()<< endl;
+            
+            
+            cout << "Suspendidos: " << suspendidos.size() << endl;
+
+            if (suspendidos.size() > 0)
+                cout << "   Suspendido ID: " << suspendidos.front().getId() << " Tamanio: " << suspendidos.front().getTamanio()<< endl;
+
+            cout << "Quantum: " << quantum << endl;
+            cout << "Marcos memoria: " << memoria.size() << endl;
 
             Sleep(1000);
             cont++;
@@ -304,14 +304,22 @@ int main(){
                     if (suspendidos.size() > 0)
                     {
                         Proceso proceso_actual = suspendidos.front();
-                        suspendidos.pop_front();
-                        nuevos.agregarProceso(proceso_actual);
-                        suspendidos.respaldar();
+
+                        marcos_dis = 40 - memoria.size();
+                        int marcos = proceso_actual.getTamanio()/5;
+                        if (proceso_actual.getTamanio()%5 != 0)
+                            marcos++;
+
+                        if (marcos <= marcos_dis)
+                        {
+                            suspendidos.pop_front();
+                            memoria.agregar(proceso_actual);
+                            listos.agregarProcesoListos(proceso_actual, cont, quantum, memoria);
+                            marcos_dis = 40 - memoria.size();
+                            suspendidos.respaldar();
+                        }
+                        
                         system("cls");
-                        cout << "Recuperado" << endl; 
-                        cout << "   ID: " << proceso_actual.getId() << endl; 
-                        cout << "   Tamanio: " << proceso_actual.getTamanio() << endl; 
-                        Sleep(1500);
                         break; 
                     }
                 }
